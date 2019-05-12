@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D2B0FE032287C921001FA389 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B0FE022287C921001FA389 /* main.m */; };
 		D2B0FE0B2287C9A0001FA389 /* NSDecimalExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B0FE0A2287C9A0001FA389 /* NSDecimalExample.m */; };
+		D2B0FE0E2287E8DE001FA389 /* NSNumberExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B0FE0D2287E8DE001FA389 /* NSNumberExample.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		D2B0FE022287C921001FA389 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D2B0FE092287C9A0001FA389 /* NSDecimalExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDecimalExample.h; sourceTree = "<group>"; };
 		D2B0FE0A2287C9A0001FA389 /* NSDecimalExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDecimalExample.m; sourceTree = "<group>"; };
+		D2B0FE0C2287E8DE001FA389 /* NSNumberExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSNumberExample.h; sourceTree = "<group>"; };
+		D2B0FE0D2287E8DE001FA389 /* NSNumberExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSNumberExample.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				D2B0FE022287C921001FA389 /* main.m */,
 				D2B0FE092287C9A0001FA389 /* NSDecimalExample.h */,
 				D2B0FE0A2287C9A0001FA389 /* NSDecimalExample.m */,
+				D2B0FE0C2287E8DE001FA389 /* NSNumberExample.h */,
+				D2B0FE0D2287E8DE001FA389 /* NSNumberExample.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			files = (
 				D2B0FE032287C921001FA389 /* main.m in Sources */,
 				D2B0FE0B2287C9A0001FA389 /* NSDecimalExample.m in Sources */,
+				D2B0FE0E2287E8DE001FA389 /* NSNumberExample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

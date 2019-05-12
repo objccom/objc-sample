@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "NSDecimalExample.h"
+#import "NSNumberExample.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         [[NSDecimalExample new] runSample];
-        
+        [[NSNumberExample new] runExample];
     }
     return 0;
 }

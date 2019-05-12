@@ -11,7 +11,9 @@
 @implementation NSDecimalExample
 
 - (void)runSample {
+    NSLog(@"begin: %@, %s", NSStringFromClass([self class]), __func__);
     [self NSDecimalCopyExample];
+    NSLog(@"%@, %s end", NSStringFromClass([self class]), __func__);
 }
 
 
