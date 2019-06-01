@@ -363,7 +363,107 @@ print("maxAmplitudeFound=\(maxAmplitudeFound)")
 这里，`AudioSample`被定义为`UInt16`的别名。因为它是一个别名，所以对`AudioSample.max`的调用实际上调用了`UInt16.min`，所有`maxAmplitudeFound`变量的值为0。
 
 ### 布尔值 (Booleans )
+Swift有一个基本的布尔类型，称为`Bool`。布尔值被称为逻辑值，因为它们只能是真或假。swift提供两个布尔常量值`true` 和 `false` ：
+```
+let orangesAreOrange = true
+let turnipsAreDelicious = false
+```
+`orangesAreOrange`和`turnipsAreDelicious`这两个常量的类型被推断为`Bool`，因为它们是用布尔文字值初始化的。与上面的`Int`和`Double`一样，如果在创建常量或变量时将其设置为`true`或`false`，则不需要将它们声明为`Bool`。类型推断有助于使swift代码在用其他类型已知的值初始化常量或变量时更加简洁和可读。
 
+布尔值在处理条件控制语句（如`if`语句）时特别有用：
+```
+if turnipsAreDelicious {
+print("Mmm, tasty turnips")
+}
+else {
+print("Eww, turnips are horrible.")
+}
+// 输出结果为 Eww, turnips are horrible.
+```
 
+条件语句（如`if`语句）在[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)中有更详细的介绍。
 
+当我们在给一个`Bool`类型的变量赋值为非`Bool`类型的值时，编译器会报错，下面示例演示编译时的报错：
+```
+let i = 1
+if i {
+// 这个示例无法编译通过，并且会报告错误：'Int' is not convertible to 'Bool'
+}
+```
+
+但是，下面的替代示例是有效的：
+```
+let i = 1
+if i == 1 {
+// 编译通过
+}
+```
+
+i == 1 的比较结果是 Bool 类型，所以第二个例子可以通过类型检查。类似 i == 1 这样的比较，请参考[基本操作符](https://docs.swift.org/swift-book/LanguageGuide/BasicOperators.html)。
+
+与swift中的其他类型安全示例一样，此方法避免了意外错误，并确保特定代码部分的意图始终是明确的。
+
+### 元组 (Tuples )
+元组将多个值组合成一个复合值。一个元组中的值可以是任何类型，并且不必是彼此相同的类型。
+
+- 初始化元组
+
+在下面示例中，（404，“未找到”）是一个描述HTTP状态代码的元组。HTTP状态代码是Web服务器在请求网页时返回的特殊值。如果您请求的网页不存在，则返回状态代码404 Not Found。
+```
+// 初始化一个元组
+let http404Error = (404, "Not Found")
+print("http404Error=\(http404Error)")
+// http404Error 是一个(Int, String)类型的元组, 它的值为 (404, "Not Found")
+```
+（404，“未找到”）类型的元组将一个`Int`和一个`String`组合在一起，为HTTP状态代码提供两个单独的值：一个数字和一个人类可读的描述。它可以描述为“类型为`(Int, String)` 类型的元组”。
+
+你可以把任意顺序的类型组合成一个元组，这个元组可以包含所有类型。只要你想，你可以创建一个类型为` (Int, Int, Int) `或者` (String, Bool)` 或者其他任何你想要的组合的元组。
+
+- 获取元组的元素
+
+您可以将元组的内容分解为单独的常量或变量，然后像往常一样访问这些常量或变量：
+```
+// 将元组的内容分解为单独的常量或变量，然后像往常一样访问这些常量或变量：
+// 下面将http404Error分解为statusCode, statusMessage
+let (statusCode, statusMessage) = http404Error
+print("Http 的 状态码为：\(statusCode)")
+print("Http 状态描述为：\(statusMessage)")
+```
+
+如果只需要一部分元组值，分解的时候可以把要忽略的部分用下划线`(_)`标记，比如：
+```
+// 下面只要http404Error这个元组的第一个元素的值
+let (statusCode1, _) = http404Error
+print("statusCode1=\(statusCode1)")
+// 打印结果为：statusCode1=404
+```
+
+另外，还可以通过下标获取元组的某个元素：
+```
+print("Http 状态码为：\(http404Error.0)")
+// Http 状态码为：404
+print("Http 状态描述为：\(http404Error.1)")
+// Http 状态描述为：Not Found
+```
+
+在定义元组时，可以为元组的单个元素命名：
+```
+let http200Status = (statusCode: 200, statusMessage: "OK!")
+```
+如果在元组中命名元素，则可以使用元素名称访问这些元素的值：
+```
+// 在定义元组时，可以为元组的单个元素命名：
+let http200Status = (statusCode: 200, description: "OK!")
+
+// 如果在元组中命名元素，则可以使用元素名称访问这些元素的值：
+print("状态码是 \(http200Status.statusCode)")
+// 输出 状态码是 200
+print("状态描述为 \(http200Status.description)")
+// 输出 状态描述为 OK!
+```
+
+作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 (Int, String) 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](https://docs.swift.org/swift-book/LanguageGuide/Functions.html#ID164)。
+
+> 注意：
+元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html)。
 

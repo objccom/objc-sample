@@ -14,6 +14,8 @@
 		D2E4D97522A29CAC000E706A /* 04-NumericLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97422A29CAC000E706A /* 04-NumericLiterals.swift */; };
 		D2E4D97722A2A277000E706A /* 05-NumericTypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97622A2A277000E706A /* 05-NumericTypeConversion.swift */; };
 		D2E4D97922A2ADC6000E706A /* 07-TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */; };
+		D2E4D97B22A2B133000E706A /* 08-Booleans.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97A22A2B133000E706A /* 08-Booleans.swift */; };
+		D2E4D97D22A2B7BE000E706A /* 09-Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +40,8 @@
 		D2E4D97422A29CAC000E706A /* 04-NumericLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-NumericLiterals.swift"; sourceTree = "<group>"; };
 		D2E4D97622A2A277000E706A /* 05-NumericTypeConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "05-NumericTypeConversion.swift"; sourceTree = "<group>"; };
 		D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "07-TypeAliases.swift"; sourceTree = "<group>"; };
+		D2E4D97A22A2B133000E706A /* 08-Booleans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "08-Booleans.swift"; sourceTree = "<group>"; };
+		D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "09-Tuples.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 				D2E4D97422A29CAC000E706A /* 04-NumericLiterals.swift */,
 				D2E4D97622A2A277000E706A /* 05-NumericTypeConversion.swift */,
 				D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */,
+				D2E4D97A22A2B133000E706A /* 08-Booleans.swift */,
+				D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */,
 			);
 			path = "01-swift-basics";
 			sourceTree = "<group>";
@@ -143,8 +149,10 @@
 				D2E4D97522A29CAC000E706A /* 04-NumericLiterals.swift in Sources */,
 				D2E4D96E22A27B5E000E706A /* 01-ConstantsAndVariables.swift in Sources */,
 				D2E4D97322A28EC1000E706A /* 03-Integers.swift in Sources */,
+				D2E4D97B22A2B133000E706A /* 08-Booleans.swift in Sources */,
 				D2E4D96722A222AD000E706A /* main.swift in Sources */,
 				D2E4D97722A2A277000E706A /* 05-NumericTypeConversion.swift in Sources */,
+				D2E4D97D22A2B7BE000E706A /* 09-Tuples.swift in Sources */,
 				D2E4D97122A2898C000E706A /* 02-comments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
