@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LearningSwift/LearningSwift.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Foundation/Foundation.xcodeproj">
    </FileRef>
 </Workspace>
