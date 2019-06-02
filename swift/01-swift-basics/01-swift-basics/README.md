@@ -577,7 +577,45 @@ print("\(firstNumber) < \(secondNumber) < 100")
 > 注意
 在 if 条件语句中使用常量和变量来创建一个可选绑定，仅在 if 语句的句中(body)中才能获取到值。相反，在 guard 语句中使用常量和变量来创建一个可选绑定，仅在 guard 语句外且在语句后才能获取到值，请参考[提前退出](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html#ID525)。
 
+##### 隐式解析可选类型
+如上所述，可选类型表示允许常量或变量具有“无值”。可以使用if语句检查可选类型，以查看值是否存在，并且可以使用可选绑定有条件地解开可选类型，以访问可选类型的值（如果存在）。
 
+有时候在程序架构中，第一次被赋值之后，可以确定一个可选类型总会有值。在这种情况下，每次都要判断和解析可选值是非常低效的，因为可以确定它总会有值。
 
+这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html#ID55)。
 
+一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
+```
+// 隐式解析可选类型
+let possibleString: String? = "一个可选类型的字符串"
+let forcedString: String = possibleString! // 使用!强制解包进行取值
+let assumedString:String! = "隐式解析这个可选类型的字符串"
+let implicitString:String = assumedString
+
+```
+
+你可以把隐式解析可选类型当做一个可以自动解析的可选类型。你要做的只是声明的时候把感叹号放到类型的结尾，而不是每次取值的可选名字的结尾。
+
+> 注意
+如果隐式解析的选项为nil，并且您试图访问其包装值，则会触发运行时错误。结果与将感叹号放在不包含值的普通可选项之后的结果完全相同。
+
+我们仍然可以将隐式解包的可选类型视为普通的可选类型，以检查它是否包含值：
+```
+if assumedString != nil {
+print("assumedString=\(assumedString)")
+// 输出结果 assumedString=Optional("隐式解析这个可选类型的字符串")
+}
+```
+
+我们还可以使用带有可选绑定的隐式解析可选类型，在单个语句中检查和展开其值：
+```
+if let definiteString = assumedString {
+print("definiteString=\(definiteString)")
+// 输出结果 definiteString=隐式解析这个可选类型的字符串
+}
+```
+
+> 注意
+当变量以后可能变为`nil`时，不要使用隐式未解包的可选参数。如果需要在变量的生存期内检查`nil`值，请始终使用普通可选类型。
