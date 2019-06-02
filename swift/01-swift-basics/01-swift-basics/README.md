@@ -538,6 +538,45 @@ print("convertedNumber 有一个整数的值为\(convertedNumber!)")
 尝试使用`!`对不存在的可选值进行强制解包，可能会导致运行时错误。在使用`nil`强制解包之前，请务必确保这个可选类型中含非`nil`值。
 
 ##### 可选绑定 (Optional Binding)
+我们可以使用可选绑定（Optional Binding）来确定可选绑定是否包含值，如果包含值，则将该值用作临时常量或变量。可选绑定可以与`if`和`while`语句一起使用，以检查可选语句中的值，并将该值提取为常量或变量，作为单个操作的一部分。`if`和`while`语句在控制流中有更详细的描述。
+
+以下是`if`语句编写的可选绑定示例：
+```
+if let <#constant name#> = <#optional#> {
+<#statements#>
+}
+```
+
+您可以从Optionals部分重写possibleNumber示例以使用可选绑定，而不是强制展开：
+```
+let possibleNumber = "123"
+
+if let actualNumber = Int(possibleNumber) {
+print("这个字符串:\(possibleNumber) 中有一个整数：\(actualNumber)")
+} else {
+print("这个字符串:\(possibleNumber) 没有一个整数")
+}
+// 输出 这个字符串:123 中有一个整数：123
+```
+
+以上代码可以理解为：
+如果`Int(possibleNumber) `返回的可选`Int`包含值，请将名为`actualNumber`的新常量设置为可选中包含的值。
+
+如果转换成功，那么`actualNumber`常量将在`if`语句的第一个分支中可用。它已经用可选内容中包含的值初始化，因此不再需要使用`!`访问其值的后缀强制解包。在本例中，`actualNumber`仅用于打印转换结果。
+
+我们也可以使用带有可选绑定的常量和变量。如果您想在`if`语句的第一个分支内操作`actualNumber`的值，可以改为写`if var actualNumber`，并且选项中包含的值将作为变量而不是常量提供。
+
+我们还可以根据需要在单个`if`语句中包含任意多个可选绑定和布尔条件，用逗号分隔。如果可选绑定中的任何值为`nil`，或者任何布尔条件的计算结果为`false`，那么整个`if`语句的条件将被视为`false`。以下if语句是等效的：
+```
+if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+print("\(firstNumber) < \(secondNumber) < 100")
+}
+// 输出结果 4 < 42 < 100
+```
+
+> 注意
+在 if 条件语句中使用常量和变量来创建一个可选绑定，仅在 if 语句的句中(body)中才能获取到值。相反，在 guard 语句中使用常量和变量来创建一个可选绑定，仅在 guard 语句外且在语句后才能获取到值，请参考[提前退出](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html#ID525)。
+
 
 
 

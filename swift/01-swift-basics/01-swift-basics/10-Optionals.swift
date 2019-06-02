@@ -47,3 +47,46 @@ func IfStatementsAndForcedUnwrapping() -> Void {
         // 输出的结果：convertedNumber 有一个整数的值为123
     }
 }
+
+/// 可选绑定
+func optionalBinding() {
+    
+    // 使用可选绑定
+//    if let <#constant name#> = <#optional#> {
+//        <#statements#>
+//    }
+    
+    let possibleNumber = "123"
+    
+    if var actualNumber = Int(possibleNumber) {
+        print("这个字符串:\(possibleNumber) 中有一个整数：\(actualNumber)")
+    } else {
+        print("这个字符串:\(possibleNumber) 没有一个整数")
+    }
+    // 输出 这个字符串:123 中有一个整数：123
+    
+    // 我们还可以根据需要在单个`if`语句中包含任意多个可选绑定和布尔条件，用逗号分隔。如果可选绑定中的任何值为`nil`，或者任何布尔条件的计算结果为`false`，那么整个`if`语句的条件将被视为`false`。以下if语句是等效的：
+    if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+        print("\(firstNumber) < \(secondNumber) < 100")
+    }
+    // 输出结果 4 < 42 < 100
+    
+    // 隐式解析可选类型
+    let possibleString: String? = "一个可选类型的字符串"
+    let forcedString: String = possibleString! // 使用!强制解包进行取值
+    let assumedString:String! = "隐式解析这个可选类型的字符串"
+    let implicitString:String = assumedString
+    
+    
+    // 我们仍然可以将隐式解包的可选类型视为普通的可选类型，以检查它是否包含值：
+    if assumedString != nil {
+        print("assumedString=\(assumedString)")
+        // 输出结果 assumedString=Optional("隐式解析这个可选类型的字符串")
+    }
+    
+    // 我们还可以使用带有可选绑定的隐式解析可选类型，在单个语句中检查和展开其值：
+    if let definiteString = assumedString {
+        print("definiteString=\(definiteString)")
+        // 输出结果 definiteString=隐式解析这个可选类型的字符串
+    }
+}
