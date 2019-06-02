@@ -619,3 +619,145 @@ print("definiteString=\(definiteString)")
 
 > 注意
 当变量以后可能变为`nil`时，不要使用隐式未解包的可选参数。如果需要在变量的生存期内检查`nil`值，请始终使用普通可选类型。
+
+### 错误处理 (Error Handling)
+我们在运行过程中遇到错误时，可以使用错误处理来响应程序可能遇到的错误条件。
+
+与可选类型相反，选项可以使用值的存在或不存在来传递函数的成功或失败，错误处理允许您确定失败的根本原因，并在必要时将错误传递到程序的其他部分（就是抛出异常）。
+
+- 抛出异常
+
+当函数遇到错误条件时，它抛出一个异常。然后，该函数的调用者可以捕获到异常并做出相应的响应。
+```
+/// 通过throws关键字抛出异常
+func canThrowAnError() throws -> Void {
+// 此函数可能会或可能不会引发错误
+}
+
+```
+以上函数表示它可以通过在声明中包含`throws`关键字来引发错误。当调用可以引发错误的函数时，请在表达式前面加上`try`关键字。
+
+- 捕获异常
+swift会自动将错误传播到当前范围之外，直到由`catch`子句处理为止。
+```
+/// 执行canThrowAnError函数，并捕获异常
+do {
+try canThrowAnError()
+// 执行到这以后说明没有捕获到错误异常
+} catch {
+// 执行到这说明有错误异常被捕获了
+}
+```
+一个`do`语句创建了一个新的包含作用域，使得错误能被传播到一个或多个`catch`语句中。
+
+以下是在错误处理中如何响应不同错误条件的示例：
+```
+/// 定义一个Sandwich(三明治)的错误枚举类型
+enum SandwichError: Error {
+// 定义第一个枚举成员，表示没有干净的盘子。
+case outOfCleanDishes
+// 定义第二个枚举成员，表示缺少的成员部分而无法购买产品，同时显示缺少成员的数量。
+case missingIngredients( ingredients: Int)
+}
+
+func makeASandwich() throws -> Void {
+print("makeASandwich 制作三明治")
+}
+
+func eatASandwich() -> Void {
+print("eatASandwich 吃三明治")
+}
+
+// 清洗盘子
+func washDishes() -> Void {
+print("washDishes 清洗盘子")
+}
+
+func buyGroceries(ingredients: Int) -> Void {
+print("购买三明治的数量：\(ingredients)")
+}
+
+func testErrorHandling() -> Void {
+// 以下是在错误处理中如何处理不同错误条件的示例：
+do {
+// 执行制作三明治
+try? makeASandwich()
+// 代码如果能执行到这，说明制作三明治完成，而且没有发生异常错误
+eatASandwich()
+} catch SandwichError.outOfCleanDishes {
+// 执行到这里，说明抛出了没有干净的盘子的异常
+// 调用washDishes函数开始清洗盘子
+washDishes()
+}
+catch SandwichError.missingIngredients(let ingredients) {
+// 执行到这里，说明抛出了缺少部分成员的异常，并返回了`ingredients`属性，他就是缺少的成员
+// 调用购买产品
+buyGroceries(ingredients: ingredients)
+}
+
+}
+
+```
+
+在本示例中，如果没有干净的盘子或缺少任何配料，`makeasandwich()`函数将抛出一个错误。`因为makeasandwich()`可以抛出异常，所以函数调用被包装在一个`try`表达式中。通过将函数调用包装在`do`语句中，引发的任何错误都将传播到提供的`catch`子语句。
+
+如果没有抛出错误，则调用`eatasandwich()`函数。如果抛出了一个错误，并且它与`SandwichError.outOfCleanDishes`错误匹配，那么将调用`washDishes()`函数。如果抛出了一个错误，并且它与`SandwichError.missingIngredients(let ingredients)`错误匹配，那么将使用`catch`模式捕获的关联[`string`]值调用`buyGroceries(ingredients:)`函数。
+
+在错误处理中，[这里](https://docs.swift.org/swift-book/LanguageGuide/ErrorHandling.html)更详细地介绍了抛出、捕获和传播错误。
+
+### 断言和先决条件 (Assertions and Preconditions)
+断言和前提条件是运行时发生的检查。在执行任何进一步的代码之前，可以使用它们来确保满足基本条件。如果断言或前提条件中的布尔条件的计算结果为`true`，则代码执行将照常继续。如果条件的计算结果为`false`，则程序的当前状态无效；代码执行结束，应用程序终止。
+
+您使用断言和前提条件来表示您在编码时所做的假设和期望，因此您可以将它们作为代码的一部分包含进来。断言帮助您在开发过程中发现错误和错误的假设，前提条件帮助您检测生产中的问题。
+
+除了在运行时验证您的期望之外，断言和前提条件也成为代码中一种有用的文档形式。与上面错误处理中讨论的错误条件不同，断言和前提条件不用于可恢复的或预期的错误。由于失败的断言或前提条件指示程序状态无效，因此无法捕获失败的断言。
+
+使用断言和前提条件并不能替代以不太可能出现无效条件的方式设计代码。但是，使用它们来强制有效的数据和状态会导致应用程序在发生无效状态时终止，这有助于使问题更容易调试。一旦检测到无效状态，立即停止执行也有助于限制该无效状态造成的损坏。
+
+断言和先决条件之间的区别在于它们被检查时：断言只在调试版本中被检查，但先决条件在调试版本和生产版本中都被检查。在生产构建中，不会评估断言内的条件。这意味着您可以在开发过程中使用任意多的断言，而不会影响生产中的性能。
+
+##### 用断言调试 (Debugging with Assertions)
+您可以通过从Swift标准库调用[`assert(_:_:file:line:) `](https://developer.apple.com/documentation/swift/1541112-assert)函数来编写断言。向此函数传递一个计算结果为`true`或`false`的表达式，以及一条在条件结果为`false`时显示的消息。例如：
+```
+let age = -3
+assert(age >= 0, "一个人的年龄不能小于0岁")
+// Assertion failed: 一个人的年龄不能小于0岁
+```
+
+在本例中，如果`age>=0`的计算结果为`true`，即，如果`age`的值为非负值，则代码执行将继续。如果`age`值为负值，如上面的代码所示，则`age>=0`的计算结果为`false`，断言失败，终止应用程序。
+
+如果不需要断言信息，可以省略，就像这样
+```
+assert(age >= 0)
+```
+
+如果代码已经检查了条件，您可以使用[`assertionFailure(_:file:line:)`(https://developer.apple.com/documentation/swift/1539616-assertionfailure)]函数来指示断言失败。例如：
+```
+if age > 10 {
+print("你可以坐过山车或摩天轮。")
+}
+else if age >= 0 {
+print("你可以骑摩天轮。")
+}
+else {
+assertionFailure("一个人的年龄不能小于0岁")
+}
+```
+
+##### 强制执行先决条件 (Enforcing Preconditions)
+当条件有可能是`false`的情况下，使用先决条件，但是需要确定只有当条件是`true`的时候你的代码才会继续执行。例如，使用先决条件判断一个下标是不是越界了，或者检查入参是不是有效。
+
+您可以通过调用[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1540960-precondition)函数来编写一个precondition。向此函数传递一个计算结果为`true`或`false`的表达式，以及一条在条件结果为`false`时显示的消息。例如：
+```
+// In the implementation of a subscript...
+let index = 0
+precondition(index > 0, "Index 必须大于0")
+// Thread 1: Precondition failed: Index 必须大于0
+```
+
+所以，我们可以在[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539374-preconditionfailure)函数来表明先决条件失败了，例如，在一个swift语句的default case里面，所有有效的数据应该在switch其他的case里面已经被处理了，那么在defaultcase里面就可以使先决条件失败。
+
+> 注意
+如果在未选中的模式下编译（-Ounchecked ），则不检查先决条件。编译器假定前提条件始终为真，并相应地优化代码。但是，无论优化设置如何，fatalerrror（u:file:line:）函数始终停止执行。
+
+您可以在原型制作和早期开发期间使用`fatalError(_:file:line:)`函数，通过将`fatalError(_:file:line:)`编写为存根实现，为尚未实现的功能创建存根。因为致命错误永远不会被优化，不像断言或前提条件，您可以确保如果遇到存根实现，执行总是停止。
