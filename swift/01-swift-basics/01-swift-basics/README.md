@@ -2,15 +2,15 @@
 
 ## 简介
 
-Swift是一种用于iOS、MacOS、WatchOS和TVOS应用程序开发的新编程语言。尽管如此，从您在C和Objective-C中开发的经验来看，swift的许多部分还是很熟悉的。
+Swift是一种用于iOS、MacOS、WatchOS和TVOS应用程序开发的新编程语言。尽管如此，从我们在c和Objective-C中开发的经验来看，swift的许多部分还是很熟悉的。
 
-Swift提供所有基本C和Objective-C类型的自己版本，包括整数的`Int`、浮点值的`Double`和`Float`、布尔值的`Bool`和文本数据的`String`。Swift还提供了三种主要集合类型（`Array`、`Set`和`Dictionary`）的强大版本，如集合类型中所述。
+Swift提供所有基于c和Objective-C基本类型的自己版本，包括整数的`Int`、浮点值的`Double`和`Float`、布尔值的`Bool`和文本数据的`String`。Swift还提供了三种主要集合类型（`Array`、`Set`和`Dictionary`）的强大版本，如集合类型中所述。
 
 与c语言类似，Swift使用变量通过标识名来存储和引用值。Swift还广泛使用其值不可更改的变量。这些被称为常量，并且比c语言中的常量强大得多。在Swift中，当您处理不需要更改的值时，常量用于使代码更安全、更清晰。
 
-除了熟悉的类型之外，Swift还引入了在Objective-C中找不到的高级类型，例如元组（tuples）。元组使您能够创建和传递值分组。可以使用元组以单个复合值的形式从函数返回多个值。
+除了熟悉的类型之外，Swift还引入了在Objective-C中没有的高级类型，例如元组（tuples）。元组使您能够创建和传递值分组。可以使用元组以单个复合值的形式从函数返回多个值。
 
-swift还引入了可选类型（optional types），用于处理缺少值的情况。选项值表示“有一个值，它等于x”或“根本没有值”。使用选项类似于在Objective-C中对指针使用nil，但它们适用于任何类型，而不仅仅是类。在Objective-C中，期权不仅比零指针更安全、更具表现力，而且是Swift许多最强大功能的核心。
+swift还引入了可选类型（optional types），用于处理缺少值的情况。可选类型表示“有一个值，它等于x”或“根本没有值”。使用选项类似于在Objective-C中对指针使用nil，但它们适用于任何类型，而不仅仅是类。在Objective-C中，可选类型不仅比空指针更安全、更具表现力，而且是Swift许多最强大功能的核心。
 
 Swift是一种类型安全的语言，这意味着该语言可以帮助您明确代码可以使用的值的类型。如果代码的一部分需要字符串，类型安全将防止您错误地传递int。同样，类型安全防止您意外地将可选字符串传递给需要非可选字符串的代码段。类型安全可以帮助您在开发过程中尽早捕获和修复错误。
 
@@ -466,4 +466,79 @@ print("状态描述为 \(http200Status.description)")
 
 > 注意：
 元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html)。
+
+### 可选类型 (Optionals)
+在一个值可能为空的时候我们要使用可选类型。可选类型代表两种可能性：要么有值，可以解开该可选类型的值以访问该值，要么根本没有值。
+
+> 注意
+在c或objective-c中没有可选类型的概念。objective-c中最接近的一点是能够从一个方法中返回nil，否则将返回一个对象，nil意味着“缺少有效对象”。但是，这只适用于对象，它不适用于结构、基本c类型或枚举值。对于这些基本类型，Objective-C方法通常返回一个特殊值（如NSNotFound），以指示没有值。这种方法假定方法的调用者知道有一个特殊的值需要测试，并记住检查它。Swift的可选类型允许您指定任何类型的值都不存在，而不需要特殊的常量。
+
+下面的示例说明如何使用可选类型来处理缺少值的情况。swift的`Int`类型有一个初始值设定项，它试图将字符串值转换为`Int`值。但是，并非每个字符串都可以转换为整数。字符串“123”可以转换为数值123，但字符串“hello，world”没有要转换的明显数值。
+
+下面的示例使用构造函数尝试将一个`String`类型的值转换为`Int`类型：
+```
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+// convertedNumber 被推断为 "Int?", or "optional Int"，这既是可选类型
+```
+上面`convertedNumber`是一个可选的`Int`类型，因为在使用`Int`的便利构造函数初始化时可能会失败，所有它返回的是可选类型的`Int` 类型，而非绝对的`Int`类型。一个可选的 `Int` 被写作`Int?` 而不是 `Int`。那么这意味着，它可能包含`Int`的值，也可能它什么都不包含，(例如`Boo`l值或`String`值。要么是一个`Int`，要么什么都不是）。
+
+##### 空值 (nil)
+给可选类型的变量指定特殊值`nil`，可以将其设置为无值状态：
+```
+// 初始化一个可选类型的变量，在类型后面使用`?`声明一个可选类型
+var serverResponseCode: Int? = 404
+serverResponseCode = nil
+print("serverResponseCode=\(serverResponseCode)")
+// 注意
+// 使用`?`声明可选类型，使用`!`对可选类型解包
+// 如果对值为nil的可选类型变量强制解包时，在运行时会抛出异常：Fatal error: Unexpectedly found nil while unwrapping an Optional value
+```
+
+>    注意
+使用`?`声明可选类型，使用`!`对可选类型解包
+如果对值为nil的可选类型变量强制解包时，在运行时会抛出异常：Fatal error: Unexpectedly found nil while unwrapping an Optional value
+另外， nil不能用于非可选的常量和变量。如果你的代码中有常量或者变量需要处理值缺失的情况，请把它们声明成对应的可选类型。
+
+当我们声明一个可选类型的常量或者变量时，没有给其赋值，那么它自动设置为nil：
+```
+var surveyAnswer: String?
+// surveyAnswer 被自动设置为 nil
+```
+
+> 注意
+Swift的`nil`与objective-c中的`nil`不同。在objective-c中，`nil`是指向不存在对象的指针。在swift中，`nil`不是指针，它是一个明确的值（表示缺少某种类型的值）。任何类型的可选类型都可以设置为nil，而不仅仅是对象类型。
+
+##### 使用`if`语句对可选类型解包 (If Statements and Forced Unwrapping)
+我们可以使用`if`语句通过将可选项与`nil`进行比较来确定可选项是否包含值。还可以使用“等于”运算符（`==`）或“不等于”运算符（`!=`）来确定。
+
+如果一个可选类型有值，那么它就不等于`nil`：
+```
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+
+if convertedNumber != nil {
+print("convertedNumber 包含一些整数的值.")
+}
+```
+
+一旦一个可选类型确定类包含非`nil`的值，那么通过在该选项类型属性的结尾添加`!`访问这个值。`!`标识符表达的是：明确确定该可选类型确定存在非`nil`的值，使用`!`解开这个可选类型，以获取到这些值。这里`!`就是强制解包。
+```
+if convertedNumber != nil {
+print("convertedNumber 包含一些整数的值.")
+// 通过`convertedNumber != nil`以明确确定`convertedNumber`存在非nil的值，那么我们通过`!`解包，获取这些值，这就是强制解包
+print("convertedNumber 有一个整数的值为\(convertedNumber!)")
+// 输出的结果：convertedNumber 有一个整数的值为123
+```
+
+有关if语句的更多信息，请参见[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)。
+
+
+> 注意
+尝试使用`!`对不存在的可选值进行强制解包，可能会导致运行时错误。在使用`nil`强制解包之前，请务必确保这个可选类型中含非`nil`值。
+
+##### 可选绑定 (Optional Binding)
+
+
+
 

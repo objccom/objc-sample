@@ -16,6 +16,7 @@
 		D2E4D97922A2ADC6000E706A /* 07-TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */; };
 		D2E4D97B22A2B133000E706A /* 08-Booleans.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97A22A2B133000E706A /* 08-Booleans.swift */; };
 		D2E4D97D22A2B7BE000E706A /* 09-Tuples.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */; };
+		D2E4D97F22A39D42000E706A /* 10-Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D97E22A39D42000E706A /* 10-Optionals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +43,7 @@
 		D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "07-TypeAliases.swift"; sourceTree = "<group>"; };
 		D2E4D97A22A2B133000E706A /* 08-Booleans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "08-Booleans.swift"; sourceTree = "<group>"; };
 		D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "09-Tuples.swift"; sourceTree = "<group>"; };
+		D2E4D97E22A39D42000E706A /* 10-Optionals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "10-Optionals.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				D2E4D97822A2ADC6000E706A /* 07-TypeAliases.swift */,
 				D2E4D97A22A2B133000E706A /* 08-Booleans.swift */,
 				D2E4D97C22A2B7BE000E706A /* 09-Tuples.swift */,
+				D2E4D97E22A39D42000E706A /* 10-Optionals.swift */,
 			);
 			path = "01-swift-basics";
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2E4D97922A2ADC6000E706A /* 07-TypeAliases.swift in Sources */,
+				D2E4D97F22A39D42000E706A /* 10-Optionals.swift in Sources */,
 				D2E4D97522A29CAC000E706A /* 04-NumericLiterals.swift in Sources */,
 				D2E4D96E22A27B5E000E706A /* 01-ConstantsAndVariables.swift in Sources */,
 				D2E4D97322A28EC1000E706A /* 03-Integers.swift in Sources */,
