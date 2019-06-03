@@ -8,5 +8,8 @@
 
 import Foundation
 
-print("Hello, World!")
-
+assignmentOperator()
+arithmeticOperators()
+remainderOperator()
+unaryMinusOperator()
+comparisonOperators()
