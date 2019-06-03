@@ -7,4 +7,7 @@
    <FileRef
       location = "group:swift/02-swift-basic-operators/02-swift-basic-operators.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:swift/03-strings-and-characters/03-strings-and-characters.xcodeproj">
+   </FileRef>
 </Workspace>
