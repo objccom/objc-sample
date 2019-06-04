@@ -8,4 +8,8 @@
 
 import Foundation
 
-
+stringLiterals()
+InitializingAnEmptyString()
+workingWithCharacters()
+concatenatingStringAndCharacters()
+stringInterpolation()

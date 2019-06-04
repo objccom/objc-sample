@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D056468922A699D60075BFE4 /* 06-String-Interpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */; };
+		D07CE05322A680B30010C9F2 /* 04-Working-with-Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */; };
+		D07CE05522A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */; };
+		D0CF48BA22A64C1C00F7576A /* 01-String-Literals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF48B922A64C1C00F7576A /* 01-String-Literals.swift */; };
+		D0CF48BD22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF48BC22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift */; };
+		D0CF48BF22A66B0E00F7576A /* 03-String-Mutability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF48BE22A66B0E00F7576A /* 03-String-Mutability.swift */; };
 		D2E4D99122A57279000E706A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4D99022A57279000E706A /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +29,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-String-Interpolation.swift"; sourceTree = "<group>"; };
+		D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-Working-with-Characters.swift"; sourceTree = "<group>"; };
+		D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "05-Concatenating-Strings-and-Characters.swift"; sourceTree = "<group>"; };
+		D0CF48B922A64C1C00F7576A /* 01-String-Literals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-String-Literals.swift"; sourceTree = "<group>"; };
+		D0CF48BB22A6558600F7576A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0CF48BC22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-Initializing-an-Empty-String.swift"; sourceTree = "<group>"; };
+		D0CF48BE22A66B0E00F7576A /* 03-String-Mutability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-String-Mutability.swift"; sourceTree = "<group>"; };
 		D2E4D98D22A57279000E706A /* 03-strings-and-characters */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "03-strings-and-characters"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E4D99022A57279000E706A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +71,13 @@
 			isa = PBXGroup;
 			children = (
 				D2E4D99022A57279000E706A /* main.swift */,
+				D0CF48B922A64C1C00F7576A /* 01-String-Literals.swift */,
+				D0CF48BC22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift */,
+				D0CF48BE22A66B0E00F7576A /* 03-String-Mutability.swift */,
+				D0CF48BB22A6558600F7576A /* README.md */,
+				D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */,
+				D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */,
+				D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */,
 			);
 			path = "03-strings-and-characters";
 			sourceTree = "<group>";
@@ -120,6 +140,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2E4D99122A57279000E706A /* main.swift in Sources */,
+				D0CF48BF22A66B0E00F7576A /* 03-String-Mutability.swift in Sources */,
+				D07CE05522A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift in Sources */,
+				D056468922A699D60075BFE4 /* 06-String-Interpolation.swift in Sources */,
+				D0CF48BA22A64C1C00F7576A /* 01-String-Literals.swift in Sources */,
+				D0CF48BD22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift in Sources */,
+				D07CE05322A680B30010C9F2 /* 04-Working-with-Characters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
