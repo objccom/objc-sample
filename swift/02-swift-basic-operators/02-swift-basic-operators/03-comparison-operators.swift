@@ -16,6 +16,7 @@ import Foundation
  */
 
 
+// 比较运算符
 func comparisonOperators() -> Void {
     
     // 1. 了解比较运算符之==
@@ -50,3 +51,5 @@ func comparisonOperators() -> Void {
      Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
      */
 }
+
+

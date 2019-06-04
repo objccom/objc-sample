@@ -11,6 +11,9 @@
 		D0E092A422A4C45500864EA0 /* 01-assignment-operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092A322A4C45500864EA0 /* 01-assignment-operator.swift */; };
 		D0E092A622A4D87700864EA0 /* 02-arithmetic-operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092A522A4D87700864EA0 /* 02-arithmetic-operators.swift */; };
 		D0E092BF22A51C1200864EA0 /* 03-comparison-operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092BE22A51C1200864EA0 /* 03-comparison-operators.swift */; };
+		D0E092C122A52A6E00864EA0 /* 04-ternary-conditional-operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092C022A52A6E00864EA0 /* 04-ternary-conditional-operator.swift */; };
+		D0E092C322A53D9700864EA0 /* 05-nil-coalescing-operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092C222A53D9700864EA0 /* 05-nil-coalescing-operator.swift */; };
+		D0E092C522A54B3F00864EA0 /* 06-range-operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E092C422A54B3F00864EA0 /* 06-range-operators.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +35,9 @@
 		D0E092A322A4C45500864EA0 /* 01-assignment-operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-assignment-operator.swift"; sourceTree = "<group>"; };
 		D0E092A522A4D87700864EA0 /* 02-arithmetic-operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-arithmetic-operators.swift"; sourceTree = "<group>"; };
 		D0E092BE22A51C1200864EA0 /* 03-comparison-operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-comparison-operators.swift"; sourceTree = "<group>"; };
+		D0E092C022A52A6E00864EA0 /* 04-ternary-conditional-operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-ternary-conditional-operator.swift"; sourceTree = "<group>"; };
+		D0E092C222A53D9700864EA0 /* 05-nil-coalescing-operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "05-nil-coalescing-operator.swift"; sourceTree = "<group>"; };
+		D0E092C422A54B3F00864EA0 /* 06-range-operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-range-operators.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,9 @@
 				D0E092A322A4C45500864EA0 /* 01-assignment-operator.swift */,
 				D0E092A522A4D87700864EA0 /* 02-arithmetic-operators.swift */,
 				D0E092BE22A51C1200864EA0 /* 03-comparison-operators.swift */,
+				D0E092C022A52A6E00864EA0 /* 04-ternary-conditional-operator.swift */,
+				D0E092C222A53D9700864EA0 /* 05-nil-coalescing-operator.swift */,
+				D0E092C422A54B3F00864EA0 /* 06-range-operators.swift */,
 			);
 			path = "02-swift-basic-operators";
 			sourceTree = "<group>";
@@ -132,7 +141,10 @@
 			files = (
 				D0E0929C22A4C3D100864EA0 /* main.swift in Sources */,
 				D0E092A422A4C45500864EA0 /* 01-assignment-operator.swift in Sources */,
+				D0E092C522A54B3F00864EA0 /* 06-range-operators.swift in Sources */,
+				D0E092C322A53D9700864EA0 /* 05-nil-coalescing-operator.swift in Sources */,
 				D0E092A622A4D87700864EA0 /* 02-arithmetic-operators.swift in Sources */,
+				D0E092C122A52A6E00864EA0 /* 04-ternary-conditional-operator.swift in Sources */,
 				D0E092BF22A51C1200864EA0 /* 03-comparison-operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

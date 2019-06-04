@@ -227,3 +227,139 @@ let flag3 = ("blue", -1) < ("purple", 1) // 可以比较
 > 注意：
 Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
+### 三目运算符 (Ternary Conditional Operator)
+三目条件算符，也叫三元条件运算符，它是一个特殊操作符，由三个操作部分组成，采用问答语句的形式。`问题 ? 答案1 : 答案2`。它是根据`问题`的真假来确定结果是哪个答案。如果`问题`为真，则返回`答案1`的值；否则，返回`答案2`的值。
+
+三元条件运算符是下面代码的简写：
+```
+if question {
+answer1
+} else {
+answer2
+}
+```
+
+下面是使用三目运算符计算表格行高度的示例。如果这行有标题，此行高应比内容高度高50点；如果行没有标题，则行高20点：
+```
+let contentHeight = 40
+let hasHeader = true
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+print("rowHeight=\(rowHeight)")
+// 输出结果 rowHeight=90
+```
+
+下面我们不使用三目运算符完成以上示例的计算：
+```
+let contentHeight = 40
+let hasHeader = true
+let rowHeight: Int
+if hasHeader {
+rowHeight = contentHeight + 50
+}
+else {
+rowHeight = contentHeight + 20
+}
+print("rowHeight=\(rowHeight)")
+```
+
+第一个示例使用三目运算符，只需要一行代码完成计算，比第二个示例简洁的多。
+
+三目运算符提供了一个有效的速记来决定要考虑的两个表达式中的哪一个，虽然它足够的简洁，但是这样会导致代码难以阅读。所以我们要尽量的避免在成一个组合语句中使用多个三目运算符。
+
+### `nil`合并运算符 (Nil-Coalescing Operator)
+`nil`合并运算符`(a ?? b)`，如果可选类型`a`包含值，则对其进行解包，并返回解包后`a`的值；如果`a`为`nil`，则返回默认值`b`。表达式`a`始终是可选类型。表达式b必须与存储在`a`中的类型匹配。
+
+使用三目运算符实现nil 的聚合运算符:
+```
+let a: Int? = 10
+let b = 20
+let c = a != nil ? a! : b
+print("c = \(c)")
+// 输出结果 c = 10
+```
+
+上面的代码使用三元条件运算符和强制解包(`a!`)，当a不为`nil`时，访问`a`中包装的值，否则返回`b`。`nil`合并运算符提供了一种更优雅的方法，以简洁易读的形式封装条件检查和解包。
+
+> 注意
+如果`a`的值不为`nil`，则不计算`b`的值。这就是所谓的短路评估。
+
+- 使用`nil`合并运算符需要满足两个条件：
+`a` 必须是`Optional`（可选类型）的。
+`b` 的类型必须要和`a`解包后的值类型一致。
+
+下面的示例使用`nil`合并运算符，在默认颜色名称和用户定义的颜色名称（可选类型）之间进行选择：
+```
+let defaultColorName = "red"
+var userDefinedColorName: String?   // 默认为nil
+var colorNameToUse = userDefinedColorName ?? defaultColorName
+print("colorNameToUse = \(colorNameToUse)")
+// 输出结果 colorNameToUse = red，因为`userDefinedColorName` 为nil, 因此`colorNameToUse`被设置为默认的red
+```
+`userDefinedColorName`变量定义为一个可选类型的字符串，默认值为`nil`。由于`userDefinedColorName`是可选类型，因此可以使用`nil`合并运算符来计算其值。在上面的示例中，运算符用于确定名为`colorNameToUse`的字符串变量的初始值。因为`userDefinedColorName`为`nil`，所以表达式`userDefinedColorName ?? defaultColorName`返回`defaultColorName`变量的值"red"。
+
+当我们给`userDefinedColorName`赋值一个非`nil`的值以后在对其进行`nil`合并运算，那么结果将返回`userDefinedColorName`解包后的值，而不再是默认值"red"。
+```
+userDefinedColorName = "green"
+colorNameToUse = userDefinedColorName ?? defaultColorName
+print("colorNameToUse = \(colorNameToUse)")
+// 输出结果 colorNameToUse = green，因为`userDefinedColorName` 已经赋值为非nil的值，所以s不再返回默认值
+```
+
+### 范围运算符 (Range Operators)
+swift包含几个范围运算符，它们是表示获取某个范围的值的快捷方式。
+
+##### 闭合范围运算符
+- 语法
+```
+a...b
+```
+闭合范围运算符定义从`a`到`b`的范围，并包括值`a`和`b`。`a`的值不得大于`b`。
+当我们在希望在某个值的某些范围内迭代时（比如 `for in`），闭合范围运算符很有用：
+```
+for index in 0...5 {
+print("\(index) times 5 is \(index * 5)")
+}
+/*输出
+0 times 5 is 0
+1 times 5 is 5
+2 times 5 is 10
+3 times 5 is 15
+4 times 5 is 20
+5 times 5 is 25
+*/
+```
+有关`for-in`的更多信息，请参见[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)。
+
+##### 半开范围运算符 (Half-Open Range Operator)
+- 语法
+```
+a..<b
+```
+半开范围运算符定义了从`a`到`b`的范围，但不包括`b`。因为它包含其第一个值，但不包含其最终值，所以说它是半开的。与闭合范围运算符一样，`a`的值不能大于`b`。如果`a`的值等于`b`，则结果范围将为空。
+
+半开范围运算符在处理基于索引为0列表或者数组时非常有用，我们在遍历数组时使用半开范围运算符，可以非常方便的从第0个访问到数组的最后位置，下面使用半开范围运算符，访问数组中的每个元素：
+```
+let names = ["Anna", "Alex", "Brian", "Jack"]
+let count = names.count
+for index in 0..<count {
+print("这个人的名字是: \(names[index])")
+}
+/*
+输出结果：
+这个人的名字是: Anna
+这个人的名字是: Alex
+这个人的名字是: Brian
+这个人的名字是: Jack
+*/
+```
+
+请注意，上面示例中，`names`这个数组中有4个元素，因为它是半开放范围，所有`0..<count `只会取值到第3个（也就是数组中最后一个元素的索引）。有关数组的更多信息，请参见[数组](https://docs.swift.org/swift-book/LanguageGuide/CollectionTypes.html#ID107)。
+
+##### 单侧范围运算符 (One-Sided Ranges)
+- 语法
+```
+2...
+```
+
+闭合范围运算符有一个替代形式，用于尽可能沿一个方向继续的范围，那就是单侧范围运算符。例如，包含从索引2到数组末尾的数组所有元素的范围。在这些情况下，可以省略范围运算符一侧的值。这种范围称为单侧范围，因为运算符只有一侧有一个值。例如：
+
