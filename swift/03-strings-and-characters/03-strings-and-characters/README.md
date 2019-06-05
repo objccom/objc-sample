@@ -334,3 +334,69 @@ print(#"6 times 7 is \#(6 * 7)."#)
 Unicode是在不同的书写系统中对文本进行编码、表示和处理的国际标准。它使您能够以标准化的形式表示任何语言中的几乎任何字符，并可以从外部源（如文本文件或网页）读取和写入这些字符。如本节所述，swift的字符串和字符类型完全符合Unicode。
 
 ##### Unicode 标量值 (Unicode Scalar Values)
+在内部，Swift的原生字符串类型被编译成Unicode标量。Unicode标量是由独立唯一21位数字组成，例如`LATIN SMALL LETTER A ("a")`的`U+0061`或用于`FRONT-FACING BABY CHICK ("🐥")`的`U+1F425`。
+
+注意，并不是所有21位的Unicode标量值都分配给一个字符，有些标量是为将来的分配或在UTF-16编码中使用而保留的。分配给字符的标量值通常也有一个名称，如上面示例中的`LATIN SMALL LETTER A`和`FRONT-FACING BABY CHICK`。
+
+##### 扩展字符集群 (Extended Grapheme Clusters)
+Swift中`Character`类型的每个字符实例都代表一个扩展字符集群。扩展字符集群是一个或多个Unicode标量的序列，这些标量（组合在一起）产生一个人类可读的字符。
+
+在下面这个例子中，字母`é`可以表示为单个Unicode标量`é`（`LATIN SMALL LETTER E WITH ACUTE`，或`U+00E9`）。 但是，相同的字母也可以表示为一对标量 —— 标准字母`e`（拉丁小写`E`或拉丁字母`U+0065`），后跟组合`ACUTE ACCENT`标量（`U+030`1）。 组合`ACUTE ACCENT`标量图形应用于其前的标量，当它们由Unicode感知文本呈现系统呈现时，将`e`转换为`é`。
+
+在这两种情况下，字母`é`表示为单个Swift `Character`值，表示扩展字形集合。在第一种情况下，集群包含单个标量；在第二种情况下，它是两个标量的集合：
+```
+let eAcute: Character =  "\u{E9}"                      // é
+let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by
+print("eAcute=\(eAcute), combinedEAcute=\(combinedEAcute)")
+// 输出 eAcute=é, combinedEAcute=é
+```
+
+扩展字符集群是将许多复杂的脚本字符表示为单个`Character`类型的值的灵活方法。例如，朝鲜字母表中的韩文音节可以表示为预编译序列或分解序列。这两种表示都符合Swift中的单个字符值：
+```
+let precomposed: Character = "\u{D55C}"                  // 한
+let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
+print("precomposed=\(precomposed), decomposed=\(decomposed)")
+// 输出 precomposed=한, decomposed=한
+```
+
+扩展字形集合包含标记的标量（如`COMBINING ENCLOSING CIRCLE`或`U+20DD`）可以将其他Unicode标量作为单个字符值的一部分：
+```
+let enclosedEAcute: Character = "\u{E9}\u{20DD}"
+print("enclosedEAcute=\(enclosedEAcute)")
+// 输出 enclosedEAcute=é⃝
+```
+用作区域指示符的Unicode标量可以成对组合以形成单个字符值，例如区域指示符符号U(`REGIONAL INDICATOR SYMBOL LETTER U`)（`U+1F1FA`）和区域指示符号表S(`REGIONAL INDICATOR SYMBOL LETTER S`) （`U+1F1F8`）的组合：
+```
+let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
+print("regionalIndicatorForUS = \(regionalIndicatorForUS)")
+// 输出 regionalIndicatorForUS = 🇺🇸
+```
+
+### 字符的计数 （Counting Characters）
+我们可以使用`String`类型字符串的`count`属性获取字符串的字符长度：
+```
+// 计算字符串中的字符数量
+let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+print("unusualMenagerie 有\(unusualMenagerie.count) 个字符")
+// 输出 unusualMenagerie 有40 个字符
+```
+
+注意，Swift对于`Character`值使用扩展字形集合意味着字符串连接和修改可能不会影响字符串的字符数。
+
+例如，如果我们使用四个字母的单词`cafe` 来初始化一个新的字符串，然后将一个组合`ACUTE ACCENT`（`U+0301`）附加到字符串的末尾，则生成的字符串为`café`，`café`仍将具有`4`的字符数，并且`cafe`的第四个字母会变成是 `é`，而不是`e`：
+```
+var word = "cafe"
+print("\(word) 这个单词的字符长度是 \(word.count) 个")
+// 输出 cafe 这个单词的字符长度是 4 个
+// 然后将一个组合`ACUTE ACCENT`的（`U+0301`）附加到字符串的末尾，
+word += "\u{301}"
+print("\(word) 这个单词的字符长度是 \(word.count) 个")
+// 输出 café 这个单词的字符长度是 4 个
+```
+
+> 注意:
+扩展的图形集合可以由多个Unicode标量组成。这意味着不同的字符和相同字符的不同表示可能需要不同的存储量来存储。因此，Swift中的字符不会在字符串表示中占用相同的内存量。因此，需在迭代字符串的情况下计算字符串中的字符数，以确定其扩展的字形集群边界。如果您使用特别长的字符串值，请注意，获取count属性必须遍历整个字符串中的Unicode标量，以确定该字符串的字符。
+count属性返回的字符数并不总是与包含相同字符的NSString的length属性相同。 NSString的长度基于字符串UTF-16表示中的16位代码单元的数量，而不是字符串中Unicode扩展的字母集合的数量。
+
+### 字符串的增删改查 (Accessing and Modifying a String)
+可以通过`String`类型字符串的方法和属性或使用下标语法访问和修改字符串。

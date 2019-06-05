@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D056468922A699D60075BFE4 /* 06-String-Interpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */; };
+		D056468B22A77BF00075BFE4 /* 07-Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056468A22A77BF00075BFE4 /* 07-Unicode.swift */; };
+		D056468D22A782980075BFE4 /* 08-Counting-Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056468C22A782980075BFE4 /* 08-Counting-Characters.swift */; };
+		D056468F22A787460075BFE4 /* 09-Accessing-and-Modifying-a-String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056468E22A787460075BFE4 /* 09-Accessing-and-Modifying-a-String.swift */; };
 		D07CE05322A680B30010C9F2 /* 04-Working-with-Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */; };
 		D07CE05522A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */; };
 		D0CF48BA22A64C1C00F7576A /* 01-String-Literals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF48B922A64C1C00F7576A /* 01-String-Literals.swift */; };
@@ -30,6 +33,9 @@
 
 /* Begin PBXFileReference section */
 		D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-String-Interpolation.swift"; sourceTree = "<group>"; };
+		D056468A22A77BF00075BFE4 /* 07-Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "07-Unicode.swift"; sourceTree = "<group>"; };
+		D056468C22A782980075BFE4 /* 08-Counting-Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "08-Counting-Characters.swift"; sourceTree = "<group>"; };
+		D056468E22A787460075BFE4 /* 09-Accessing-and-Modifying-a-String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "09-Accessing-and-Modifying-a-String.swift"; sourceTree = "<group>"; };
 		D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-Working-with-Characters.swift"; sourceTree = "<group>"; };
 		D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "05-Concatenating-Strings-and-Characters.swift"; sourceTree = "<group>"; };
 		D0CF48B922A64C1C00F7576A /* 01-String-Literals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-String-Literals.swift"; sourceTree = "<group>"; };
@@ -78,6 +84,9 @@
 				D07CE05222A680B30010C9F2 /* 04-Working-with-Characters.swift */,
 				D07CE05422A6863F0010C9F2 /* 05-Concatenating-Strings-and-Characters.swift */,
 				D056468822A699D60075BFE4 /* 06-String-Interpolation.swift */,
+				D056468A22A77BF00075BFE4 /* 07-Unicode.swift */,
+				D056468C22A782980075BFE4 /* 08-Counting-Characters.swift */,
+				D056468E22A787460075BFE4 /* 09-Accessing-and-Modifying-a-String.swift */,
 			);
 			path = "03-strings-and-characters";
 			sourceTree = "<group>";
@@ -145,7 +154,10 @@
 				D056468922A699D60075BFE4 /* 06-String-Interpolation.swift in Sources */,
 				D0CF48BA22A64C1C00F7576A /* 01-String-Literals.swift in Sources */,
 				D0CF48BD22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift in Sources */,
+				D056468B22A77BF00075BFE4 /* 07-Unicode.swift in Sources */,
+				D056468F22A787460075BFE4 /* 09-Accessing-and-Modifying-a-String.swift in Sources */,
 				D07CE05322A680B30010C9F2 /* 04-Working-with-Characters.swift in Sources */,
+				D056468D22A782980075BFE4 /* 08-Counting-Characters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
