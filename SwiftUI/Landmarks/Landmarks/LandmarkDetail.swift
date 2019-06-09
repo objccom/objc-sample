@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LandmarkDetail.swift
 //  Landmarks
 //
 //  Created by swae on 2019/6/8.
@@ -8,24 +8,29 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct LandmarkDetail : View {
+    
+    var landmark: Landmark
+    
     var body: some View {
         VStack {
-            MapView()
+            MapView(coordinate: landmark.locationCoordinate)
                 .frame(height: 300)
                 // 允许地图内容扩展到屏幕的上边缘
                 .edgesIgnoringSafeArea(.top)
-            CircleImage()
+            CircleImage(image: landmark.image(forSize: 250))
                 .offset(y: -130)
                 .padding(.bottom, -130)
             VStack(alignment: .leading) {
-                Text("Turtle Rock")
+                Text(landmark.name)
                     .font(.title)
                     HStack {
-                        Text("Joshua Tree National Park")
+                        Text(landmark.park)
+                            .font(.subheadline)
                         // 让 HStack 中的子控件宽度充满整个父视图
                         Spacer()
-                        Text("California")
+                        Text(landmark.state)
+                            .font(.subheadline)
                     }
                 }
                 // 设置间距
@@ -33,13 +38,14 @@ struct ContentView : View {
             
             Spacer()
             }
+        .navigationBarTitle(Text(verbatim: landmark.name), displayMode: .inline)
     }
 }
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        LandmarkDetail(landmark: landmarkData[0])
     }
 }
 #endif

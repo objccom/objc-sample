@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  Landmarks
+//  02-Building-Lists-and-Navigation
 //
 //  Created by swae on 2019/6/8.
 //  Copyright © 2019 xiaoyuan. All rights reserved.

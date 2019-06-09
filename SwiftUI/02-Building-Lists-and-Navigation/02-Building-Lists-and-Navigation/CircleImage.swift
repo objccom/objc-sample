@@ -1,8 +1,8 @@
 //
 //  CircleImage.swift
-//  Landmarks
+//  02-Building-Lists-and-Navigation
 //
-//  Created by swae on 2019/6/8.
+//  Created by swae on 2019/6/9.
 //  Copyright © 2019 xiaoyuan. All rights reserved.
 //
 
@@ -14,11 +14,8 @@ struct CircleImage : View {
     
     var body: some View {
         image
-            // 给图片添加圆角
             .clipShape(Circle())
-            // 给圆角添加边框
             .overlay(Circle().stroke(Color.gray, lineWidth: 4))
-            // 添加半径为10的阴影
             .shadow(radius: 10)
     }
 }
