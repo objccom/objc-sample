@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:swift/04-Collection-Types/04-Collection-Types.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:swift/01-swift-basics/01-swift-basics.xcodeproj">
    </FileRef>
    <FileRef
