@@ -42,6 +42,7 @@
 		D0CF48BB22A6558600F7576A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D0CF48BC22A667CC00F7576A /* 02-Initializing-an-Empty-String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-Initializing-an-Empty-String.swift"; sourceTree = "<group>"; };
 		D0CF48BE22A66B0E00F7576A /* 03-String-Mutability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-String-Mutability.swift"; sourceTree = "<group>"; };
+		D0E60CF022AE12FB00295687 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2E4D98D22A57279000E706A /* 03-strings-and-characters */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "03-strings-and-characters"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E4D99022A57279000E706A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,6 +61,7 @@
 		D2E4D98422A57279000E706A = {
 			isa = PBXGroup;
 			children = (
+				D0E60CF022AE12FB00295687 /* README.md */,
 				D2E4D98F22A57279000E706A /* 03-strings-and-characters */,
 				D2E4D98E22A57279000E706A /* Products */,
 			);

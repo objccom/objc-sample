@@ -40,6 +40,7 @@
 		D0E092C022A52A6E00864EA0 /* 04-ternary-conditional-operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-ternary-conditional-operator.swift"; sourceTree = "<group>"; };
 		D0E092C222A53D9700864EA0 /* 05-nil-coalescing-operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "05-nil-coalescing-operator.swift"; sourceTree = "<group>"; };
 		D0E092C422A54B3F00864EA0 /* 06-range-operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-range-operators.swift"; sourceTree = "<group>"; };
+		D0E60CEF22AE12F000295687 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 		D0E0928F22A4C3D100864EA0 = {
 			isa = PBXGroup;
 			children = (
+				D0E60CEF22AE12F000295687 /* README.md */,
 				D0E0929A22A4C3D100864EA0 /* 02-swift-basic-operators */,
 				D0E0929922A4C3D100864EA0 /* Products */,
 			);

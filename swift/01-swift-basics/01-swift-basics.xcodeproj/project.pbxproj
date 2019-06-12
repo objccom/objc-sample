@@ -34,10 +34,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D0E60CEE22AE12E500295687 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2E4D96322A222AD000E706A /* 01-swift-basics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "01-swift-basics"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E4D96622A222AD000E706A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D2E4D96D22A27B5E000E706A /* 01-ConstantsAndVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-ConstantsAndVariables.swift"; sourceTree = "<group>"; };
-		D2E4D96F22A28759000E706A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2E4D97022A2898C000E706A /* 02-comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-comments.swift"; sourceTree = "<group>"; };
 		D2E4D97222A28EC1000E706A /* 03-Integers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-Integers.swift"; sourceTree = "<group>"; };
 		D2E4D97422A29CAC000E706A /* 04-NumericLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-NumericLiterals.swift"; sourceTree = "<group>"; };
@@ -64,6 +64,7 @@
 		D2E4D95A22A222AD000E706A = {
 			isa = PBXGroup;
 			children = (
+				D0E60CEE22AE12E500295687 /* README.md */,
 				D2E4D96522A222AD000E706A /* 01-swift-basics */,
 				D2E4D96422A222AD000E706A /* Products */,
 			);
@@ -83,7 +84,6 @@
 				D2E4D96622A222AD000E706A /* main.swift */,
 				D2E4D96D22A27B5E000E706A /* 01-ConstantsAndVariables.swift */,
 				D2E4D97022A2898C000E706A /* 02-comments.swift */,
-				D2E4D96F22A28759000E706A /* README.md */,
 				D2E4D97222A28EC1000E706A /* 03-Integers.swift */,
 				D2E4D97422A29CAC000E706A /* 04-NumericLiterals.swift */,
 				D2E4D97622A2A277000E706A /* 05-NumericTypeConversion.swift */,
