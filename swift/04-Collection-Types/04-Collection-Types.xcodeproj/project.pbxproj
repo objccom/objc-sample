@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0D1C5A422B24DEC001AC115 /* 01-Array-Type-Shorthand-Syntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1C5A322B24DEC001AC115 /* 01-Array-Type-Shorthand-Syntax.swift */; };
 		D0E60CE822AE114700295687 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E60CE722AE114700295687 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D0D1C5A322B24DEC001AC115 /* 01-Array-Type-Shorthand-Syntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-Array-Type-Shorthand-Syntax.swift"; sourceTree = "<group>"; };
 		D0E60CE422AE114700295687 /* 04-Collection-Types */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "04-Collection-Types"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E60CE722AE114700295687 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D0E60CF122AE131100295687 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				D0E60CE722AE114700295687 /* main.swift */,
+				D0D1C5A322B24DEC001AC115 /* 01-Array-Type-Shorthand-Syntax.swift */,
 			);
 			path = "04-Collection-Types";
 			sourceTree = "<group>";
@@ -123,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0E60CE822AE114700295687 /* main.swift in Sources */,
+				D0D1C5A422B24DEC001AC115 /* 01-Array-Type-Shorthand-Syntax.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
