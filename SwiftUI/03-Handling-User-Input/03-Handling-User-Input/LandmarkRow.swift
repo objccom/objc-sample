@@ -20,12 +20,13 @@ struct LandmarkRow : View {
             Spacer()
             
             if landmark.isFavorite {
-//                Image(systemName: "star.fill")
+                Image(systemName: "star.fill")
+                    .foregroundColor(Color.yellow)
                 // star.fill 不显示
-                Image("icon_poi_star_h")
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(.yellow)
-                    .clipped()
+//                Image("icon_poi_star_h")
+//                    .frame(width: 20, height: 20)
+//                    .foregroundColor(.yellow)
+//                    .clipped()
                 
             }
         }

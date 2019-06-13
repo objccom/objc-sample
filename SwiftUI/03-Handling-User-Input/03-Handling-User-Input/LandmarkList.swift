@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LandmarkList : View {
     
-    @State var showFavoritesOnly = true
+    @EnvironmentObject var userData: UserData
     
     var body: some View {
         NavigationView {
@@ -18,7 +18,7 @@ struct LandmarkList : View {
                 
                 // 视图1 切换按钮
                 // 使用$ 前缀 将showFavoritesOnly属性，绑定给Toggle控件
-                Toggle(isOn: $showFavoritesOnly) {
+                Toggle(isOn: $userData.showFavoritesOnly) {
                     Text("Favorites only")
                 }
                 
@@ -27,8 +27,8 @@ struct LandmarkList : View {
                 /*
                  要在`List`中组合静态视图和动态视图，或组合两个或多个不同的动态列表或视图时，需要在`List`中添加`ForEach`类型，用于显示其中的列表，并将数据集合传递给该`ForEach`，而不是传递给`List`。
                  */
-                ForEach(landmarkData) { landmark in
-                    if !self.showFavoritesOnly || landmark.isFavorite {
+                ForEach(userData.landmarks) { landmark in
+                    if !self.userData.showFavoritesOnly || landmark.isFavorite {
                         NavigationButton(destination: LandmarkDetail(landmark: landmark)) {
                             LandmarkRow(landmark: landmark)
                         }
@@ -46,6 +46,7 @@ struct LandmarkList : View {
 struct LandmarkList_Previews : PreviewProvider {
     static var previews: some View {
         LandmarkList()
+            .environmentObject(UserData())
     }
 }
 #endif
