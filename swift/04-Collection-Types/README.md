@@ -244,3 +244,148 @@ Swift的`Set`类型桥接到`Foundation`的`NSSet`类。
 有关使用Set with Foundation和Cocoa的更多信息，请参阅[Set和NSSet之间的桥接](https://developer.apple.com/documentation/swift/set#2845530)。
 
 ##### 集合类型的哈希值 （Hash Values for Set Types）
+一个类型为了存储在集合中，该类型必须是可哈希化的--也就是说，该类型必须提供一个方法来计算它的哈希值。一个哈希值是`Int`类型的，相等的对象哈希值必须相同，比如`a==b`,因此必须`a.hashValue == b.hashValue`。
+
+Swift 的所有基本类型(比如`String`，`Int`，`Double`和`Bool`)默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值(在[Enumerations ](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html)有讲述)默认也是可哈希化的。
+
+> 注意：
+我们可以使用自定义的类型作为集合的值的类型或者是字典的键的类型，但这些自定义类型必须符合 Swift 标准库中的`Hashable`协议。符合`Hashable`协议的类型需要提供一个类型为`Int`的可读属性`hashValue`。由类型的`hashValue`属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
+因为`Hashable`协议符合`Equatable`协议，所以遵循该协议的类型也必须提供一个"是否相等"运算符(`==`)的实现。这个`Equatable`协议要求任何符合`==`实现的实例间都是一种相等的关系。也就是说，对于a,b,c三个值来说，`==`的实现必须满足下面三种情况：
+
+- `a == a`(自反性)
+- `a == b`意味着`b == a`(对称性)
+- `a == b && b == c`意味着`a == c`(传递性)
+
+关于遵循协议的更多信息，请看[协议](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html)。
+
+##### 集合类型语法 （Set Type Syntax）
+Swift集的类型写为`Set <Element>`，其中`Element`是允许集存储的类型。 与数组不同，集合没有等效的简写形式。
+
+##### 初始化和创建集合 （Creating and Initializing an Empty Set）
+我们可以通过构造器语法创建一个特定类型的空集合：
+
+- 1.通过构造器语法创建一个特定类型的空集合：
+
+```
+    // 创建一个字符集合
+    var letters = Set<Character>()
+    print("letters is of type Set<Character> with \(letters.count) items.")
+    // 输出 letters is of type Set<Character> with 0 items.
+```
+
+> 注意：
+通过构造器，这里的letters变量的类型被推断为`Set<Character>`。
+
+- 2.向集合中添加元素：
+或者，如果上下文已经提供了类型信息，例如函数参数或已经键入的变量或常量，则可以使用空数组文字创建一个空的`Set`：
+```
+    letters.insert("a")
+    // letters 现在含有1个 Character 类型的值
+    letters = []
+    // letters 现在是一个空的 Set, 但是它依然是 Set<Character> 类型
+```
+
+##### 用数组字面量创建集合（Creating a Set with an Array Literal）
+我们还可以使用字符数组初始化集合，作为将一个或多个值写为集合的简写方式。
+
+- 1.创建一个名为`favoriteGenres`的`Set`来存储`String`值：
+```
+    var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+    // favoriteGenres 现在被初始化为包含三个字符串元素的集合
+```
+
+这个`favoriteGenres`变量被声明为“`String`值的集合”，写为`Set<String>`。由于这个特定的集合含有指定`String`类型的值，所以它只允许存储`String`类型值。这里的`favoriteGenres`变量有三个`String`类型的初始值("Rock"，"Classical"和"Hip hop")，并以数组字面量的方式出现。
+
+> 注意：
+`favoriteGenres`被声明为一个变量(拥有`var`标示符)而不是一个常量(拥有`let`标示符),因为它里面的元素将会在下面的例子中被增加或者移除。
+
+一个`Set`类型不能从数组字面量中被单独推断出来，因此`Set`类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个Set并且该数组字面量中的所有元素类型相同，那么你无须写出Set的具体类型。`favoriteGenres`的构造形式可以采用简化的方式代替：
+```
+var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+```
+
+由于数组字面量中的所有元素类型相同，Swift 可以推断出`Set<String>`作为`favoriteGenres`变量的正确类型。
+
+##### 访问和修改集合的元素（Accessing and Modifying a Set）
+我们可以通过其方法和属性访问和修改集合。
+
+- 1.使用只读的`count `属性获取集合的元素个数。
+
+```
+    var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+    print("favoriteGenres 的元素个数：\(favoriteGenres.count)")
+    // 输出 favoriteGenres 的元素个数：3
+```
+
+- 2.判断集合是否为空，使用`Bool`类型的`isEmpty`属性作为检查`count`属性是否等于0的快捷方式：
+
+```
+    if favoriteGenres.isEmpty {
+        print("As far as music goes, I'm not picky.")
+    } else {
+        print("I have particular music preferences.")
+    }
+    // 输出 "I have particular music preferences."
+```
+
+- 3.添加元素到集合中，调用`Set`的`insert(_ :)`方法将新元素添加到集合中：
+
+```
+    favoriteGenres.insert("Jazz")
+    // favoriteGenres 中现在包含4个元素
+```
+
+- 4.移除集合中的元素，通过调用`Set`的`remove(_ :)`方法从集合中删除项目，如果该项目是该集合的成员，则删除该项目，并返回已删除的值，如果该集合不包含该项目，则返回`nil`。 或者，可以使用`removeAll()`方法删除集合中的所有元素。
+
+```
+    if let removedGenre = favoriteGenres.remove("Rock") {
+        print("\(removedGenre)? I'm over it.")
+    } else {
+        print("I never much cared for that.")
+    }
+    // 输出 "Rock? I'm over it."
+```
+
+- 5.检查集合中是否包含某个元素，使用`contains(_ :)`方法。
+
+```
+    // 5.检查集合中是否包含某个元素，使用`contains(_ :)`方法。
+    if favoriteGenres.contains("Funk") {
+        print("I get up on the good foot.")
+    } else {
+        print("It's too funky in here.")
+    }
+    // 输出 "It's too funky in here."
+```
+
+
+##### 集合的迭代（Iterating Over a Set）
+使用`for-in`循环遍历一个`Set`中的所有元素。
+
+- 1.使用for-in循环遍历集合中所有元素
+```
+    let favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+    // 1.使用for-in循环遍历集合中所有元素
+    for genre in favoriteGenres {
+        print("\(genre)")
+    }
+    // Rock
+    // Classical
+    // Hip hop
+```
+
+更多关于for-in循环的信息，参见[For-In Loops.](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html#ID121)。
+
+Swift 的Set类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sorted()`方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符`<`对元素进行比较的结果来确定.
+
+```
+for genre in favoriteGenres.sorted() {
+    print("\(genre)")
+}
+// Classical
+// Hip hop
+// Jazz
+```
+
+
+

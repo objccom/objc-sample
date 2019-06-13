@@ -11,3 +11,7 @@ import Foundation
 arrayTypeShorthandSyntax()
 accessingAndModifyingAnArray()
 iteratingOverAnArray()
+createSets()
+CreatingASetWithAnArrayLiteral()
+AccessingAndModifyingSet()
+IteratingOverSet()

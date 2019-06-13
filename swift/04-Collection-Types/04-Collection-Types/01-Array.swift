@@ -1,5 +1,5 @@
 //
-//  01-Array-Type-Shorthand-Syntax.swift
+//  01-Array.swift
 //  04-Collection-Types
 //
 //  Created by xiaoyuan on 2019/6/13.
