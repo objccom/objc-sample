@@ -167,3 +167,265 @@ struct Badge_Previews: PreviewProvider {
 `addLine(to :)`方法占用一个点并绘制它。 连续调用`addLine(to :)`在前一点开始一行并继续到新点。
 
 
+不要担心我们的六角形看起来有点不寻常; 现在只是预期行为。 在接下来的几个步骤中，我们将努力使六边形看起来更像本节开头所示的徽章形状。
+
+##### 步骤
+使用`addQuadCurve(to：control :)`方法绘制徽章角的Bézier(贝塞尔)曲线。
+
+```swift
+import SwiftUI
+
+struct Badge : View {
+    var body: some View {
+        // 在`Badge.swift`中，添加一个`Path`形状到`Badge`中， 再调用这个`Path`的`fill()`方法将其转换为视图。
+        Path { path in
+            var width: CGFloat = 100.0
+            let height = width
+            path.move(
+                to: CGPoint(
+                    x: width*0.95,
+                    y: height*(0.20 + HexagonParameters.adjustment)
+                )
+            )
+            
+            HexagonParameters.points.forEach {
+                path.addLine(
+                    to: .init(
+                        x: width * $0.useWidth.0 * $0.xFactors.0,
+                        y: height * $0.useHeight.0 * $0.yFactors.0
+                    )
+                )
+                path.addQuadCurve(
+                    to: .init(
+                        x: width * $0.useWidth.1 * $0.xFactors.1,
+                        y: height * $0.useHeight.1 * $0.yFactors.1
+                    ), control: .init(
+                        x: width * $0.useWidth.2 * $0.xFactors.2,
+                        y: height * $0.useHeight.2 * $0.yFactors.2
+                    )
+                )
+            }
+        }
+        .fill(Color.black)
+        
+    }
+}
+
+#if DEBUG
+struct Badge_Previews : PreviewProvider {
+    static var previews: some View {
+        Badge()
+    }
+}
+#endif
+
+```
+
+
+
+##### 步骤6
+将徽章path放在在GeometryReader中，以便徽章可以使用其包含视图的大小，该视图定义大小而不是对值进行硬编码（100）。
+
+```swift
+import SwiftUI
+
+struct Badge : View {
+    var body: some View {
+        
+        GeometryReader { geometry in
+            
+            // 在`Badge.swift`中，添加一个`Path`形状到`Badge`中， 再调用这个`Path`的`fill()`方法将其转换为视图。
+            Path { path in
+                var width: CGFloat = min(geometry.size.width, geometry.size.height)
+                let height = width
+                path.move(
+                    to: CGPoint(
+                        x: width*0.95,
+                        y: height*(0.20 + HexagonParameters.adjustment)
+                    )
+                )
+                
+                HexagonParameters.points.forEach {
+                    path.addLine(
+                        to: .init(
+                            x: width * $0.useWidth.0 * $0.xFactors.0,
+                            y: height * $0.useHeight.0 * $0.yFactors.0
+                        )
+                    )
+                    
+                    path.addQuadCurve(
+                        to: .init(
+                            x: width * $0.useWidth.1 * $0.xFactors.1,
+                            y: height * $0.useHeight.1 * $0.yFactors.1
+                        ),
+                        control: .init(
+                            x: width * $0.useWidth.2 * $0.xFactors.2,
+                            y: height * $0.useHeight.2 * $0.yFactors.2
+                        )
+                    )
+                }
+            }
+            .fill(Color.black)
+        }
+        
+        
+    }
+}
+
+#if DEBUG
+struct Badge_Previews : PreviewProvider {
+    static var previews: some View {
+        Badge()
+    }
+}
+#endif
+
+```
+
+使用最小的几何体的两个维度可以在徽章的包含视图不是正方形时保留纵横比。
+
+##### 步骤7 使用`xScale`和`xOffset`调整变量将徽章置于其几何体中心。
+
+##### 步骤8 使用渐变替换徽章的纯黑色背景以匹配设计。
+
+```swift
+import SwiftUI
+
+struct Badge : View {
+    var body: some View {
+        
+        GeometryReader { geometry in
+            
+            // 在`Badge.swift`中，添加一个`Path`形状到`Badge`中， 再调用这个`Path`的`fill()`方法将其转换为视图。
+            Path { path in
+                var width: CGFloat = min(geometry.size.width, geometry.size.height)
+                let height = width
+                let xScale: CGFloat = 0.832
+                let xOffset = (width * (1.0 - xScale)) / 2.0
+                width *= xScale
+                path.move(
+                    to: CGPoint(
+                        x: xOffset + width * 0.95,
+                        y: height * (0.20 + HexagonParameters.adjustment)
+                    )
+                )
+                
+                HexagonParameters.points.forEach {
+                    path.addLine(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.0 * $0.xFactors.0,
+                            y: height * $0.useHeight.0 * $0.yFactors.0
+                        )
+                    )
+                    
+                    path.addQuadCurve(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.1 * $0.xFactors.1,
+                            y: height * $0.useHeight.1 * $0.yFactors.1
+                        ),
+                        control: .init(
+                            x: xOffset + width * $0.useWidth.2 * $0.xFactors.2,
+                            y: height * $0.useHeight.2 * $0.yFactors.2
+                        )
+                    )
+                }
+            }
+                // 使用渐变替换徽章的纯黑色背景以匹配设计。
+                .fill(LinearGradient(
+                    gradient: .init(colors: [Self.gradientStart, Self.gradientEnd]),
+                    startPoint: .init(x: 0.5, y: 0),
+                    endPoint: .init(x: 0.5, y: 0.6)
+                ))
+            
+        }
+        
+        
+    }
+    
+    static let gradientStart = Color(red: 239.0 / 255, green: 120.0 / 255, blue: 221.0 / 255)
+    static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
+}
+
+#if DEBUG
+struct Badge_Previews : PreviewProvider {
+    static var previews: some View {
+        Badge()
+    }
+}
+#endif
+```
+
+##### 步骤9 将`aspectRatio(_：contentMode :)`修饰符应用于渐变填充。
+
+```swift
+import SwiftUI
+
+struct Badge : View {
+    var body: some View {
+        
+        GeometryReader { geometry in
+            
+            // 在`Badge.swift`中，添加一个`Path`形状到`Badge`中， 再调用这个`Path`的`fill()`方法将其转换为视图。
+            Path { path in
+                var width: CGFloat = min(geometry.size.width, geometry.size.height)
+                let height = width
+                let xScale: CGFloat = 0.832
+                let xOffset = (width * (1.0 - xScale)) / 2.0
+                width *= xScale
+                path.move(
+                    to: CGPoint(
+                        x: xOffset + width * 0.95,
+                        y: height * (0.20 + HexagonParameters.adjustment)
+                    )
+                )
+                
+                HexagonParameters.points.forEach {
+                    path.addLine(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.0 * $0.xFactors.0,
+                            y: height * $0.useHeight.0 * $0.yFactors.0
+                        )
+                    )
+                    
+                    path.addQuadCurve(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.1 * $0.xFactors.1,
+                            y: height * $0.useHeight.1 * $0.yFactors.1
+                        ),
+                        control: .init(
+                            x: xOffset + width * $0.useWidth.2 * $0.xFactors.2,
+                            y: height * $0.useHeight.2 * $0.yFactors.2
+                        )
+                    )
+                }
+            }
+                // 使用渐变替换徽章的纯黑色背景以匹配设计。
+                .fill(LinearGradient(
+                    gradient: .init(colors: [Self.gradientStart, Self.gradientEnd]),
+                    startPoint: .init(x: 0.5, y: 0),
+                    endPoint: .init(x: 0.5, y: 0.6)
+                ))
+            .aspectRatio(1, contentMode: .fit)
+            
+        }
+        
+        
+    }
+    
+    static let gradientStart = Color(red: 239.0 / 255, green: 120.0 / 255, blue: 221.0 / 255)
+    static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
+}
+
+#if DEBUG
+struct Badge_Previews : PreviewProvider {
+    static var previews: some View {
+        Badge()
+    }
+}
+#endif
+```
+
+通过保持1：1的宽高比，徽章保持其位于视图中心的位置，即使其父视图不是正方形。
+
+### 绘制徽章符号（Draw the Badge Symbol）
+
