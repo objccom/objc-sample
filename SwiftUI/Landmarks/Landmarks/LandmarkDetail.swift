@@ -10,6 +10,12 @@ import SwiftUI
 
 struct LandmarkDetail : View {
     
+    @EnvironmentObject var userData: UserData
+    
+    var landmarkIndex: Int {
+        userData.landmarks.firstIndex(where: {$0.id == landmark.id})!
+    }
+    
     var landmark: Landmark
     
     var body: some View {
@@ -22,23 +28,43 @@ struct LandmarkDetail : View {
                 .offset(y: -130)
                 .padding(.bottom, -130)
             VStack(alignment: .leading) {
-                Text(landmark.name)
-                    .font(.title)
-                    HStack {
-                        Text(landmark.park)
-                            .font(.subheadline)
-                        // 让 HStack 中的子控件宽度充满整个父视图
-                        Spacer()
-                        Text(landmark.state)
-                            .font(.subheadline)
+                HStack {
+                    Text(landmark.name)
+                        .font(.title)
+                    Button(action: {
+                        self.userData.landmarks[self.landmarkIndex].isFavorite.toggle()
+                    }) {
+                        if self.userData.landmarks[self.landmarkIndex].isFavorite {
+                            // 收藏了
+                            Image("icon_poi_star_h")
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.yellow)
+                                .clipped()
+                        }
+                        else {
+                            // 未收藏
+                            Image("icon_poi_star_h")
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.gray)
+                                .clipped()
+                        }
                     }
+                }
+                HStack {
+                    Text(landmark.park)
+                        .font(.subheadline)
+                    // 让 HStack 中的子控件宽度充满整个父视图
+                    Spacer()
+                    Text(landmark.state)
+                        .font(.subheadline)
+                }
                 }
                 // 设置间距
                 .padding()
             
             Spacer()
             }
-        .navigationBarTitle(Text(verbatim: landmark.name), displayMode: .inline)
+            .navigationBarTitle(Text(verbatim: landmark.name), displayMode: .inline)
     }
 }
 
@@ -46,6 +72,7 @@ struct LandmarkDetail : View {
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
         LandmarkDetail(landmark: landmarkData[0])
+            .environmentObject(UserData())
     }
 }
 #endif
