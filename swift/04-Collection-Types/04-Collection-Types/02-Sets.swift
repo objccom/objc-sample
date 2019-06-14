@@ -93,3 +93,64 @@ func IteratingOverSet() {
     // Hip hop
     // Jazz
 }
+
+// 集合的基本操作
+func fundamentalSetOperations() {
+    /*
+    - 使用`intersection(_:)`方法根据两个集合中共同的元素创建的一个新的集合。
+    - 使用`symmetricDifference(_:)`方法根据在一个集合中但不在两个集合中的值创建一个新的集合。
+    - 使用`union(_:)`方法根据两个集合中所有的元素创建一个新的集合。
+    - 使用`subtracting(_:)`方法将两个集合中不共有的元素创建一个新的集合。
+ */
+    
+    let oddDigits: Set = [1, 3, 5, 7, 9]
+    let evenDigits: Set = [0, 2, 4, 6, 8]
+    let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+    
+    // union() 方法会把oddDigits和evenDigits这两个集合合并成一个集合
+    print( oddDigits.union(evenDigits).sorted())
+    //  由于使用的是Set所以合并后的集合中会去除重复元素，然后使用`sorted()`排序，注意：sorted 后返回的是数组（数组是有序的）
+    // 输出结果 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    
+    // 将两个集合中共有的元素创建为一个集合
+    print(oddDigits.intersection(evenDigits).sorted())
+    // 输出结果 []
+    
+    // 将两个集合中不共有的元素创建为一个新集合
+    print(oddDigits.subtracting(singleDigitPrimeNumbers).sorted())
+    // 输出结果 [1, 9]
+    
+    // 获取 oddDigits 中不包含singleDigitPrimeNumbers的元素，singleDigitPrimeNumbers中 不包含oddDigits的元素
+    print(oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted())
+    // 输出结果 [1, 2, 9]
+}
+
+// 集合的成员关系和相等性（Set Membership and Equality）
+func SetMembershipAndEquality() -> Void {
+    /*
+     - 使用“是否相等”运算符(`==`)来判断两个集合是否包含全部相同的元素。
+     - 使用`isSubset(of:)`方法来判断一个集合中的元素是否也被包含在另外一个集合中。
+     - 使用`isSuperset(of:)`方法来判断一个集合中包含另一个集合中所有的元素。
+     - 使用`isStrictSubset(of:)`或者`isStrictSuperset(of:)`方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
+     - 使用`isDisjoint(with:)`方法来判断两个集合是否不含有相同的元素(是否没有交集)。
+     */
+    
+    let houseAnimals: Set = ["🐶", "🐱"]
+    let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+    let cityAnimals: Set = ["🐦", "🐭"]
+    
+    // 判断 houseAnimals中的元素 是否被包含在farmAnimals中
+    print(houseAnimals.isSubset(of: farmAnimals))
+    // true
+    
+    // 判断 farmAnimals 是否包含houseAnimals的所有元素
+    print(farmAnimals.isSuperset(of: houseAnimals))
+    // true
+    
+    // 判断两个集合中是否没有相同的元素
+    print(farmAnimals.isDisjoint(with: cityAnimals))
+    // true
+}
+
+
+

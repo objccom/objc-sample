@@ -9,19 +9,32 @@
 import SwiftUI
 
 struct LandmarkList : View {
+    
+    @EnvironmentObject var userData: UserData
+    
     var body: some View {
         // 设置导航容器
         NavigationView {
-            // 初始化一个类型TableView的view
-            List(landmarkData) { landmark in
-                // 点击cell时，将当前`landmark`传递到目标`LandmarkDetail`中。
-                NavigationButton(destination: LandmarkDetail(landmark: landmark)) {
-                    
-                    LandmarkRow(landmark: landmark)
+            
+            List {
+                
+                Toggle(isOn: $userData.showFavoritesOnly) {
+                    Text("Favorites only")
                 }
+                
+                ForEach(landmarkData) { landmark in
+                    if !self.userData.showFavoritesOnly || landmark.isFavorite {
+                        // 点击cell时，将当前`landmark`传递到目标`LandmarkDetail`中。
+                        NavigationButton(destination: LandmarkDetail(landmark: landmark)) {
+                            
+                            LandmarkRow(landmark: landmark)
+                        }
+                    }
+                    
+                }
+                // 显示当前列表页的导航标题
+                    .navigationBarTitle(Text("Landmarks"))
             }
-            // 显示当前列表页的导航标题
-            .navigationBarTitle(Text("Landmarks"))
         }
         
     }
@@ -38,6 +51,7 @@ struct LandmarkList_Previews : PreviewProvider {
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 // 将设备名称添加为预览的标签。
                 .previewDisplayName(deviceName)
+                .environmentObject(UserData())
         }
         
         
