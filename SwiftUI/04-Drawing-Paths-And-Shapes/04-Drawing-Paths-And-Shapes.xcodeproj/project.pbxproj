@@ -33,6 +33,9 @@
 		D0AF22F322B392E400DD2723 /* LandmarkRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF22F222B392E400DD2723 /* LandmarkRow.swift */; };
 		D0AF22F522B394BA00DD2723 /* LandmarkDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF22F422B394BA00DD2723 /* LandmarkDetail.swift */; };
 		D0AF22F722B398CF00DD2723 /* LandmarkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF22F622B398CF00DD2723 /* LandmarkList.swift */; };
+		D0AF22F922B39EA800DD2723 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D0AF22F822B39EA800DD2723 /* README.md */; };
+		D0AF22FB22B3A46600DD2723 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF22FA22B3A46600DD2723 /* Badge.swift */; };
+		D0AF22FD22B3A75100DD2723 /* HexagonParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF22FC22B3A75100DD2723 /* HexagonParameters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		D0AF22F222B392E400DD2723 /* LandmarkRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkRow.swift; sourceTree = "<group>"; };
 		D0AF22F422B394BA00DD2723 /* LandmarkDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkDetail.swift; sourceTree = "<group>"; };
 		D0AF22F622B398CF00DD2723 /* LandmarkList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkList.swift; sourceTree = "<group>"; };
+		D0AF22F822B39EA800DD2723 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0AF22FA22B3A46600DD2723 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		D0AF22FC22B3A75100DD2723 /* HexagonParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonParameters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,7 @@
 		D0AF22AB22B38E7200DD2723 = {
 			isa = PBXGroup;
 			children = (
+				D0AF22F822B39EA800DD2723 /* README.md */,
 				D0AF22B622B38E7200DD2723 /* 04-Drawing-Paths-And-Shapes */,
 				D0AF22B522B38E7200DD2723 /* Products */,
 			);
@@ -101,6 +108,7 @@
 				D0AF22CB22B38F3300DD2723 /* Resources */,
 				D0AF22B722B38E7200DD2723 /* AppDelegate.swift */,
 				D0AF22B922B38E7200DD2723 /* SceneDelegate.swift */,
+				D0AF22FC22B3A75100DD2723 /* HexagonParameters.swift */,
 				D0AF22BD22B38E7600DD2723 /* Assets.xcassets */,
 				D0AF22C222B38E7600DD2723 /* LaunchScreen.storyboard */,
 				D0AF22C522B38E7600DD2723 /* Info.plist */,
@@ -155,6 +163,7 @@
 			children = (
 				D0AF22EE22B3901700DD2723 /* CircleImage.swift */,
 				D0AF22F022B390FD00DD2723 /* MapView.swift */,
+				D0AF22FA22B3A46600DD2723 /* Badge.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -228,6 +237,7 @@
 				D0AF22E022B38F3300DD2723 /* icybay.jpg in Resources */,
 				D0AF22E322B38F3300DD2723 /* twinlake.jpg in Resources */,
 				D0AF22E122B38F3300DD2723 /* lakemcdonald.jpg in Resources */,
+				D0AF22F922B39EA800DD2723 /* README.md in Resources */,
 				D0AF22E222B38F3300DD2723 /* hiddenlake.jpg in Resources */,
 				D0AF22E422B38F3300DD2723 /* umbagog.jpg in Resources */,
 				D0AF22E922B38F3300DD2723 /* rainbowlake.jpg in Resources */,
@@ -243,8 +253,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AF22FD22B3A75100DD2723 /* HexagonParameters.swift in Sources */,
 				D0AF22B822B38E7200DD2723 /* AppDelegate.swift in Sources */,
 				D0AF22F722B398CF00DD2723 /* LandmarkList.swift in Sources */,
+				D0AF22FB22B3A46600DD2723 /* Badge.swift in Sources */,
 				D0AF22F122B390FD00DD2723 /* MapView.swift in Sources */,
 				D0AF22BA22B38E7200DD2723 /* SceneDelegate.swift in Sources */,
 				D0AF22EF22B3901700DD2723 /* CircleImage.swift in Sources */,
