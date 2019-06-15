@@ -35,18 +35,12 @@ struct LandmarkDetail : View {
                         self.userData.landmarks[self.landmarkIndex].isFavorite.toggle()
                     }) {
                         if self.userData.landmarks[self.landmarkIndex].isFavorite {
-                            // 收藏了
-                            Image("icon_poi_star_h")
-                                .frame(width: 20, height: 20)
+                            Image(systemName: "star.fill")
                                 .foregroundColor(.yellow)
-                                .clipped()
                         }
                         else {
-                            // 未收藏
-                            Image("icon_poi_star_h")
-                                .frame(width: 20, height: 20)
+                            Image(systemName: "star")
                                 .foregroundColor(.gray)
-                                .clipped()
                         }
                     }
                 }
