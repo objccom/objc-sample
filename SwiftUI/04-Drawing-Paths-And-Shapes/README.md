@@ -428,4 +428,275 @@ struct Badge_Previews : PreviewProvider {
 通过保持1：1的宽高比，徽章保持其位于视图中心的位置，即使其父视图不是正方形。
 
 ### 绘制徽章符号（Draw the Badge Symbol）
+“地标”徽章的中心有一个自定义标志，该标志基于出现在“地标”应用程序图标中的山。
 
+山脉符号由两个形状组成：一个代表峰顶的雪盖，另一个代表沿着进近的植被。 你将使用两个部分三角形的形状绘制它们，这些形状由一个小间隙分开。
+
+
+##### 步骤1
+对`Badge`视图的主体分解并进行封装，创建名为`BadgeBackground.swift`的新文件中的新`BadgeBackground`视图，将`Badge`中`body`中的内容封装为`BadgeBackground`视图，作为为其他视图准备`Badge`视图的方法。
+
+```swift
+BadgeBackground.swift
+
+import SwiftUI
+
+struct BadgeBackground: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                var width: CGFloat = min(geometry.size.width, geometry.size.height)
+                let height = width
+                let xScale: CGFloat = 0.832
+                let xOffset = (width * (1.0 - xScale)) / 2.0
+                width *= xScale
+                path.move(
+                    to: CGPoint(
+                        x: xOffset + width * 0.95,
+                        y: height * (0.20 + HexagonParameters.adjustment)
+                    )
+                )
+                
+                HexagonParameters.points.forEach {
+                    path.addLine(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.0 * $0.xFactors.0,
+                            y: height * $0.useHeight.0 * $0.yFactors.0
+                        )
+                    )
+                    
+                    path.addQuadCurve(
+                        to: .init(
+                            x: xOffset + width * $0.useWidth.1 * $0.xFactors.1,
+                            y: height * $0.useHeight.1 * $0.yFactors.1
+                        ),
+                        control: .init(
+                            x: xOffset + width * $0.useWidth.2 * $0.xFactors.2,
+                            y: height * $0.useHeight.2 * $0.yFactors.2
+                        )
+                    )
+                }
+            }
+            .fill(LinearGradient(
+                gradient: .init(colors: [Self.gradientStart, Self.gradientEnd]),
+                startPoint: .init(x: 0.5, y: 0),
+                endPoint: .init(x: 0.5, y: 0.6)
+            ))
+            .aspectRatio(1, contentMode: .fit)
+        }
+    }
+    static let gradientStart = Color(red: 239.0 / 255, green: 120.0 / 255, blue: 221.0 / 255)
+    static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
+}
+
+#if DEBUG
+struct BadgeBackground_Previews: PreviewProvider {
+    static var previews: some View {
+        BadgeBackground()
+    }
+}
+#endif
+```
+
+
+##### 步骤2
+在步骤1中我们将`Badge`的`body`中的视图封装`BadgeBackground`了，现在将`BadgeBackground`视图放置`Badge`视图的`body`中，以在`Badge`中显示`BadgeBackground`。
+
+```swift
+Badge.swift
+import SwiftUI
+
+struct Badge: View {
+    var body: some View {
+        BadgeBackground()
+    }
+}
+
+#if DEBUG
+struct Badge_Previews: PreviewProvider {
+    static var previews: some View {
+        Badge()
+    }
+}
+#endif
+```
+
+##### 步骤3
+为徽章设计中以旋转图案标记的山形创建名为`BadgeSymbol`的新自定义视图。
+
+```swift
+//
+//  BadgeSymbol.swift
+//  04-Drawing-Paths-And-Shapes
+//
+//  Created by swae on 2019/6/15.
+//  Copyright © 2019 xiaoyuan. All rights reserved.
+//
+
+import SwiftUI
+
+struct BadgeSymbol : View {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+    }
+}
+
+#if DEBUG
+struct BadgeSymbol_Previews : PreviewProvider {
+    static var previews: some View {
+        BadgeSymbol()
+    }
+}
+#endif
+
+```
+
+##### 步骤4
+使用路径API绘制符号的顶部。
+
+![Snip20190615_2.png](https://static.kuwe.top/2019/6/7JGRAnN4hl6mFY2rUleKKnNt9yXWPW5G2peuoGZ4vqvZH1CgAx0V7HGYdPSOTGRo "Snip20190615_2.png")
+
+实验
+尝试调整与`spacing`，`topWidth`和`topHeight`常量关联的数字乘数，以了解它们如何影响整体形状。
+
+```swift
+//
+//  BadgeSymbol.swift
+//  04-Drawing-Paths-And-Shapes
+//
+//  Created by swae on 2019/6/15.
+//  Copyright © 2019 xiaoyuan. All rights reserved.
+//
+
+import SwiftUI
+
+struct BadgeSymbol : View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = min(geometry.size.width, geometry.size.height)
+                let height = width * 0.75
+                let spacing = width * 0.030
+                let middle = width / 2
+                let topWidth = 0.226 * width
+                let topHeight = 0.488 * height
+                
+                path.addLines([
+                    CGPoint(x: middle, y: spacing),
+                    CGPoint(x: middle - topWidth, y: topHeight - spacing),
+                    CGPoint(x: middle, y: topHeight / 2 + spacing),
+                    CGPoint(x: middle + topWidth, y: topHeight - spacing),
+                    CGPoint(x: middle, y: spacing)
+                    ])
+            }
+        }
+    }
+}
+
+#if DEBUG
+struct BadgeSymbol_Previews : PreviewProvider {
+    static var previews: some View {
+        BadgeSymbol()
+    }
+}
+#endif
+
+```
+
+##### 步骤5
+第5步
+绘制符号的底部。
+使用`move(to :)`修饰符在同一路径中的多个形状之间插入间隙。
+
+![Snip20190615_3.png](https://static.kuwe.top/2019/6/o22zDgeZ5q1A0tSfTP54ibYDgZ02awMtiAQA3R4U7z1RA4PZlrrRdzrYJ0BzgYGD "Snip20190615_3.png")
+
+##### 步骤6
+使用设计中的紫色填充符号。
+
+![Snip20190615_4.png](https://static.kuwe.top/2019/6/wU7Tjn9FbBR0JdvoMzcca7UlEbQyg0on2TknxANLx0mA2UtHN8iRLxExBvGkwurp "Snip20190615_4.png")
+
+### 第4节 组合徽章前景和背景（Combine the Badge Foreground and Background）
+徽章设计要求在徽章背景上旋转并重复多次山形。
+定义一种新的旋转类型，并利用ForEach视图将相同的调整应用于山形的多个副本。
+
+![43236731-061e-4662-8f27-06d71ca8f000.png](https://static.kuwe.top/2019/6/0F2ir7GE5ccS5713FjaykWCsOtsQICr5h4nWvKWi776wB2V9cL2HnDhk3FVyecxW "43236731-061e-4662-8f27-06d71ca8f000.png")
+
+##### 步骤1
+创建一个新的`RotatedBadgeSymbol`视图以封装旋转符号。
+
+
+##### 步骤2
+在`Badge.swift`中，将徽章的符号放在徽章背景上，方法是将其放在`ZStack`中。
+
+![Snip20190615_5.png](https://static.kuwe.top/2019/6/1ncZV69xy9RnO2WBHF2pmwVPCxZhWcdfU7x0FuCrZktRkHA6N6iMVcf3STxck9Xj "Snip20190615_5.png")
+
+现在看来，徽章符号与预期的设计和背景的相对大小相比太大。
+
+##### 步骤3
+通过读取周围的几何图形并缩放符号来更正徽章符号的大小。
+
+![Snip20190615_6.png](https://static.kuwe.top/2019/6/J4Zh5iF3ViyVRg1cDN95bKQt0obRxYYAg2FVZ7NjJVnayskHsAveyAZLwNOynMAH "Snip20190615_6.png")
+
+##### 步骤4
+添加`ForEach`视图以旋转并显示徽章符号的副本。
+
+![Snip20190615_7.png](https://static.kuwe.top/2019/6/kSd6vSIZpeDUrXZhHnVHXUgIg7HmKgS95EBebaH2xhrAvoJltwmIQFdFkoKaqZ1l "Snip20190615_7.png")
+
+完整的360°旋转分为八个部分，通过重复山脉符号创建一个类似太阳的模式。
+
+### 检查你的理解
+
+- 1.GeometryReader的目的是什么？
+可选项：
+a. 我们可以使用`GeometryReader`将父视图划分为用于在屏幕上布局视图的网格。
+b. 我们可以使用`GeometryReader`动态绘制，定位和调整视图，而不是在应用程序中的其他位置或不同大小的显示器上重复使用视图时可能不正确的硬编码。
+c. 我们可以使用`GeometryReader`自动识别应用程序视图层次结构中形状视图的类型和位置，例如`Circle`。
+
+答案：b
+
+- 2.如何在以下代码中列出视图？
+
+```swift
+ZStack {
+   Circle().fill(Color.green)
+   Circle().fill(Color.yellow).scaleEffect(0.8)
+   Circle().fill(Color.orange).scaleEffect(0.6)
+   Circle().fill(Color.red).scaleEffect(0.4)
+}
+```
+
+可选项：
+a.  ![47c8cfa0-9cbb-46f6-8af6-5485fb5e8211.png](https://static.kuwe.top/2019/6/1Gp2JNo71OmjrByD9ch77sxgWWWM4L69gajNVWjcRdOp6ZmuHKC3lx4BsPGz9Xno "47c8cfa0-9cbb-46f6-8af6-5485fb5e8211.png")
+
+b. ![c36584f9-dba1-4897-8229-5e5b17731eda.png](https://static.kuwe.top/2019/6/KTAd0awy7fwYGx72ArVCHwet7ZlkUd6HSSHIv3jSLQOD2MoEQ4b2JJCu1SfanM6t "c36584f9-dba1-4897-8229-5e5b17731eda.png")
+
+c. ![30a550d3-d021-49a8-a260-dd9161d215a5.png](https://static.kuwe.top/2019/6/5olRwa3lzfNYkAzwRS9tek0e24YFiESsxksvlsriUglKfFbYUsVFMd2hFXVZEOWv "30a550d3-d021-49a8-a260-dd9161d215a5.png")
+
+答案：a
+
+- 3.以下绘图代码的形状是什么形状？
+
+```swift
+Path { path in
+   path.move(to: CGPoint(x: 20, y: 0))
+   path.addLine(to: CGPoint(x: 20, y: 200))
+   path.addLine(to: CGPoint(x: 220, y: 200))
+   path.addLine(to: CGPoint(x: 220, y: 0))
+}
+.fill(
+   LinearGradient(
+       gradient: .init(colors: [Color.green, Color.blue]),
+       startPoint: .init(x: 0.5, y: 0),
+       endPoint: .init(x: 0.5, y: 0.5)
+   )
+)
+```
+
+可选项：
+a. ![03a3b1fa-2fa4-4409-8ff5-6394d4a4317b.png](https://static.kuwe.top/2019/6/VnbXhFo59JBdHd7tjWKTCJ9tmKT0iONkN8F0Khtf7n41HgwV5Ri4mQp30rhvO0J7 "03a3b1fa-2fa4-4409-8ff5-6394d4a4317b.png")
+
+b. ![aceaf67a-466c-44c1-9b25-415f889c7b4c.png](https://static.kuwe.top/2019/6/EJGBd1Wkv7RuZHdWvpuJc4GwiS3Nvnyb2Dt9J8KgWXNVIbvnOIkGEqDt3N1XUnxq "aceaf67a-466c-44c1-9b25-415f889c7b4c.png")
+
+c. ![69603008-9e73-43c8-8ebc-6e9918d40aa7.png](https://static.kuwe.top/2019/6/1yZWb6jKhI5JgvsdDOzEeD0ObA1d05pou19e6TXrROjdGmO8wH8iRe43RrTG8mjt "69603008-9e73-43c8-8ebc-6e9918d40aa7.png")
+
+答案：c
