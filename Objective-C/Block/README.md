@@ -556,3 +556,31 @@ block有三种类型：`_NSConcreteStackBlock`、`_NSConcreteGlobalBlock`、`_NS
 
 解决方案：
 在block表达式内部加入`blockSelf = nil;`的赋值操作，就可以规避循环引用，也就是说当我们调用`_blk`之后就会断开这个环，然后就可以得到内存的释放和销毁，这种解决方案有一个弊端，如果这个block未被调用时，这个环就一直存在，导致无法释放该对象。
+```objective-c
+@interface XYBlock5 ()
+
+@property (nonatomic, assign) int var;
+@property (nonatomic, copy) int (^ blk)(int num);
+
+@end
+
+@implementation XYBlock5
+
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
+- (void)method {
+    __block XYBlock5 *blockSelf = self;
+    _blk = ^int (int num) {
+        
+        int ret = num * blockSelf.var;
+        // 在block表达式内部加入`blockSelf = nil;`的赋值操作，就可以规避循环引用
+        blockSelf = nil;
+        return ret;
+    };
+    _blk(3);
+}
+
+@end
+```
