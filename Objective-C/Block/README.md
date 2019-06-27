@@ -139,8 +139,8 @@ static void _I_XYBlock_method(XYBlock * self, SEL _cmd) {
 ##### `Block`对以下类型的变量截获是不一样的。
 关于block的截获特性你是否了解
 - 局部变量
-    - 基本数据类型
-    - 对象数据类型
+    * 基本数据类型
+    * 对象数据类型
 - 静态局部变量
 - 全局变量
 - 静态全局变量
@@ -318,6 +318,7 @@ static void _I_XYBlock2_method(XYBlock2 * self, SEL _cmd) {
 }
 ```
 从`_I_XYBlock2_method()`函数内第一行代码可以得知, 使用`__block`修饰的`multiplier`整型变量使用clang编译后变成了`__Block_byref_multiplier_0`类型的结构体。
+第二行代码就是`multiplier = 4;`编译后的代码，最终变成了`(multiplier.__forwarding->multiplier) = 4;`，就是找到`multiplier`对象的`__forwarding`，并对其`multiplier`成员变量赋值为4。
 
 - `__block`被clang编译后的 `__Block_byref_multiplier_0`结构体
 我们找到`__Block_byref_multiplier_0`的声明
@@ -355,7 +356,203 @@ struct __XYBlock2__method_block_impl_0 {
 __Block_byref_multiplier_0 *_multiplier, int flags=0) : multiplier(_multiplier->__forwarding) {}
 ```
 
-##### 当`block`在栈上时，`__block`结构体中的`__forwarding`指向`__block`结构体自己。
+##### 当`block`在栈上时，`__block`结构体中的`__forwarding`指向`__block`结构体自己
+当我们给`multiplier`赋值时，实际上是对`__block`结构体中的`__forwarding`指针，实际上还是这个`__block`结构体本身，所有还是对这个`__block`结构体的`multiplier`成员进行赋值。
 ##### 当`block`在堆上时，`__block`结构体中的`__forwarding`指向其他地方。
+这个问题在下面的【栈上`__block`的copy操作】中会讲到。
 
 - `__forwarding`是用来做什么的
+在栈上的`__block`的`__forwarding`指向它自己，即使没有这个变量我们也可以直接对`multiplier`进行赋值， 那`__block`结构体的`__forwarding`指针岂不是多余了。
+
+### `Block`内存管理
+
+- block都有哪几种类型
+我们在clang编译后block结构体中，可以看到`impl.isa = &_NSConcreteStackBlock;`这一句代码中的`isa`指针就是标记block是哪种类型的。
+
+block有三种类型：`_NSConcreteStackBlock`、`_NSConcreteGlobalBlock`、`_NSConcreteMallocBlock`。
+
+- block在内存中是怎么被分配的
+
+| 内存分区 | 
+| :------: | 
+| 内核区 |
+| 栈区（stack） | `_NSConcreteStackBlock`在栈上 | 
+| 堆区（heap） | `_NSConcreteMallocBlock`放在堆区 |
+| 未初始化数据区（.bss） |
+| 已初始化数据区（.data） | `_NSConcreteGlobalBlock`放在已初始化代码区。 |
+| 代码段（.txt） |
+| 保留 |
+
+
+- block 的copy操作
+
+| Block类别 | 源 | Copy结果 | 
+| :------: | :------: | :------: | 
+| `_NSConcreteStackBlock` | 栈区 | 堆区 |
+| `_NSConcreteMallocBlock` | 堆区 | 增加引用计数 | 
+| `_NSConcreteGlobalBlock` | 数据区 | 什么都不做 |
+
+
+- 栈上block的销毁
+假如在栈区有一个`__block`变量，并且有一个block，在变量作用域结束后`block`和`__block`变量都会被销毁。
+
+- 栈上block的copy
+假如在栈上有一个block，并且block中使用了`__block`变量（block内需要对外部局部变量进行赋值操作时使用`__block`），当对此block进行copy操作时，会在堆区产生一个与栈区一模一样的block和`__block`变量，但是它们是分在两块内存空间中，随着变量作用域的结束栈区block和`__block`变量会被销毁。但是堆区的block和`__block`变量仍然存在。
+
+由此就产生一个问题：在`MRC`环境下当我们对栈上的block进行copy操作之后是否会引起内存泄露？
+答案是肯定的，这与我们手动通过`alloc`方法创建一个对象，没有调用`release`的效果是一样的。
+
+- 栈上`__block`的copy操作
+假如在栈上有一个block，并且有`__block`变量，这个`__block`有一个`__forwarding`指针，当block在栈区时，`__forwarding`指针指向`__block`对象本身。当对栈区的block进行copy之后，在堆区会产生一个完全一致的block和`__block`变量。此时栈上的`__block`结构体中的`__forwarding`指针指向堆区的`__block`的`__forwarding`，而堆区的`__forwarding`指针指向`__block`本身。
+当我们对`multiplier`这样一个`__block`修饰的整型变量修改时，转换出来的都是同一行代码
+```
+(multiplier.__forwarding->multiplier) = 4;
+```
+当我们对栈上的block已经做完copy操作后，实际上我们修改的不是栈上`__block`变量的值，而是通过栈上`__block`结构体里面的`__forwarding`指针找到堆上的`__block`变量，然后对堆上的`multiplier`进行赋值比如4。
+那么同样的，如果`__block`变量由于被成员变量block所持有的话，当我们在另一个方法或者其他的地方调用这个`__block`的修改的情况下，那实际上是通过自身的`__forwarding`指针来进行修改的。
+经过编译器的编译，`(multiplier.__forwarding->multiplier) = 4;`代码不管是出现在栈上还是堆区的调用，实际上都是针对堆上的`__block`进行修改的。
+
+如果我们没有对栈上的block进行copy操作，`(multiplier.__forwarding->multiplier) = 4;`修改的就是栈上block的`__block`变量
+
+
+### `__forwarding`的总结
+
+- 先看一道百度的笔试题，这道题实际上是考验我们对`__forwarding`的理解：
+
+```objective-c
+@interface XYBlock3 ()
+
+@property (nonatomic, copy) int(^blk)(int num);
+
+@end
+
+@implementation XYBlock3
+
+- (void)method {
+
+    __block int multipliter = 10;
+    _blk = ^int(int num) {
+        return num * multipliter;
+    };
+    
+    multipliter = 6;
+    [self executeBlock];
+}
+
+- (void)executeBlock {
+    // 这是百度的笔试的真题，这道题实际上是考验我们对`__forwarding`的理解
+    int result = _blk(4);
+    NSLog(@"result is %d", result);
+    // 输出结果 result is 24
+}
+
+@end
+
+```
+
+输出结果 result is 24
+`-method`方法中的代码分析：
+第一行代码`__block int multipliter = 10;`初始化了`multipliter`是一个`__block`修饰的局部变量，那么实际上在clang编译后，他就变成了对象。所以实际上`multipliter = 6;`对`multipliter`的赋值不是对这个局部变量的赋值，而是通过`multipliter`的`__forwarding`指针，然后对其成员变量`multipliter`进行赋值。
+第二行代码创建一个block并赋值给`_blk`，`_blk`是`XYBlock3`对象的成员变量，并且属性修饰符为copy，当对他进行赋值操作时，实际上会对其进行copy，那么`_blk`这个block就会在堆区有另一份副本。
+第三行代码`multipliter = 6;`代表的含义就是通过栈上的`multipliter`的`__forwarding`指针找到堆上的所对应的`__block`变量，然后对堆上的`__block`结构体的`multiplier`属性进行赋值比如6。
+
+在`-executeBlock`方法中执行`_blk(4)`并传入参数为4，在block代码块内执行了`num * multipliter;`，实际上这里使用的`multipliter`变量是堆上的`__block`变量，所以之后block之后是4乘以6的，结果就是24。
+
+
+- `__forwarding`存在的意义
+无论block在内存的哪个区域，都可以顺利的访问同一个`__block`的变量。
+
+
+#### Block循环引用的问题
+
+- 先看示例，看下下面的代码有什么问题
+```objective-c
+@interface XYBlock4 ()
+
+@property (nonatomic, strong) NSMutableArray *array;
+@property (nonatomic, copy) NSString *(^strBlock)(NSString *num);
+
+@end
+
+@implementation XYBlock4
+
+- (void)method {
+    _array = [NSMutableArray arrayWithObject:@"block"];
+    
+    _strBlock = ^NSString *(NSString *num) {
+        // 在此block内使用成员变量`_array`，会产生警告： Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
+        return [NSString stringWithFormat:@"helloOC_%@", _array[0]];
+    };
+    _strBlock(@"hello");
+}
+
+@end
+
+```
+
+分析以上代码产生循环引用的原因：
+以上代码中，`XYBlock4`类有两个成员变量`strong`特性的`array`和`copy`特性的`strBlock`，此时`XYBlock4`对象持有了`array`变量和`strBlock`变量，而在`strBlock`的block代码块中又持有了`XYBlock4`对象的`array`成员变量。
+这样会产生循环引用，并且是自循环形式的循环引用，由于`XYBlock4`是通过copy关键字声明的`strBlock`成员，所以当前对象对这个block是强引用的，而block的表达式中又使用了当前对象的`array`成员变量，那么通过block截获变量的特性，关于block中使用对象类型的局部变量或成员变量，会连同其所有权及关键字一同截获，而`array`属性在当前对象中是使用`strong`修饰的，所以在block的结构体中有一个strong类型的指针指向原来的对象或当前对象，由此就产生了一个循环引用。
+
+
+- 如何解决循环引用
+使用`__weak`修饰符创建一个弱引用的变量并将`_array`赋值给它，在block表达式内使用这个`__weak`修饰的变量，即可打破自循环引用
+```objective
+@interface XYBlock4 ()
+
+@property (nonatomic, strong) NSMutableArray *array;
+@property (nonatomic, copy) NSString *(^strBlock)(NSString *num);
+
+@end
+
+@implementation XYBlock4
+
+- (void)method {
+    _array = [NSMutableArray arrayWithObject:@"block"];
+    
+    // 解决循环引用
+    __weak NSMutableArray *weakArray = _array;
+    _strBlock = ^NSString *(NSString *num) {
+        // 在此block内使用成员变量`_array`，会产生警告： Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
+        return [NSString stringWithFormat:@"helloOC_%@", weakArray[0]];
+    };
+    _strBlock(@"hello");
+}
+
+@end
+```
+
+为什么通过`__weak`修饰对于的成员变量就可以达到避免循环引用的目的呢？
+这个答案实际在讲block截获变量的特性时就给出了答案，由于block对截获的变量，如果这个变量是对象类型的，连同其所有权修饰符一起截获，当我们在block使用的外部变量是`__weak`修饰符的，那么在block当中所 产生的结构体中的变量也是`__weak`修饰的。
+
+
+### `__block`引发的循环引用
+
+先看示例，看看以下代码有什么问题：
+```objective-c
+@interface XYBlock5 ()
+
+@property (nonatomic, assign) int var;
+@property (nonatomic, copy) int (^ blk)(int num);
+
+@end
+
+@implementation XYBlock5
+
+- (void)method {
+    __block XYBlock5 *blockSelf = self;
+    _blk = ^int (int num) {
+        return num * blockSelf.var;
+    };
+    _blk(3);
+}
+
+@end
+```
+
+- 在MRC环境下，以上代码不会产生循环引用，没有任何问题。
+- 在ARC下，会产生循环引用，引发内存泄露。
+由于原对象持有了block，block持有了`__block`变量，而`__block`又持有了原对象，导致大环引用，在ARC下可以采用断环的形式，解决这种循环引用，断开`__block`变量对原对象的持有，就可以规避循环引用。
+
+解决方案：
+在block表达式内部加入`blockSelf = nil;`的赋值操作，就可以规避循环引用，也就是说当我们调用`_blk`之后就会断开这个环，然后就可以得到内存的释放和销毁，这种解决方案有一个弊端，如果这个block未被调用时，这个环就一直存在，导致无法释放该对象。

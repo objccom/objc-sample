@@ -10,6 +10,8 @@
 #import "XYBlock.h"
 #import "XYBlock1.h"
 #import "XYBlock2.h"
+#import "XYBlock3.h"
+#import "XYBlock5.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -17,6 +19,8 @@ int main(int argc, const char * argv[]) {
         [[XYBlock new] method];
         [[XYBlock1 new] method];
         [[XYBlock2 new] method];
+        [[XYBlock3 new] method];
+        [[XYBlock5 new] method];
     }
     return 0;
 }

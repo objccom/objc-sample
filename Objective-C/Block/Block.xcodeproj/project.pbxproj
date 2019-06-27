@@ -11,6 +11,9 @@
 		D075D30922C45F6B009130F1 /* XYBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D075D30822C45F6B009130F1 /* XYBlock.m */; };
 		D075D30E22C488DC009130F1 /* XYBlock1.m in Sources */ = {isa = PBXBuildFile; fileRef = D075D30D22C488DC009130F1 /* XYBlock1.m */; };
 		D075D31322C4A947009130F1 /* XYBlock2.m in Sources */ = {isa = PBXBuildFile; fileRef = D075D31222C4A947009130F1 /* XYBlock2.m */; };
+		D247AC0322C5239A00C613BE /* XYBlock3.m in Sources */ = {isa = PBXBuildFile; fileRef = D247AC0222C5239A00C613BE /* XYBlock3.m */; };
+		D247AC0622C52B0C00C613BE /* XYBlock4.m in Sources */ = {isa = PBXBuildFile; fileRef = D247AC0522C52B0C00C613BE /* XYBlock4.m */; };
+		D247AC0922C5310F00C613BE /* XYBlock5.m in Sources */ = {isa = PBXBuildFile; fileRef = D247AC0822C5310F00C613BE /* XYBlock5.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +41,12 @@
 		D075D31122C4A947009130F1 /* XYBlock2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYBlock2.h; sourceTree = "<group>"; };
 		D075D31222C4A947009130F1 /* XYBlock2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYBlock2.m; sourceTree = "<group>"; };
 		D075D31422C4AA21009130F1 /* XYBlock2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XYBlock2.cpp; sourceTree = "<group>"; };
+		D247AC0122C5239A00C613BE /* XYBlock3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYBlock3.h; sourceTree = "<group>"; };
+		D247AC0222C5239A00C613BE /* XYBlock3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYBlock3.m; sourceTree = "<group>"; };
+		D247AC0422C52B0C00C613BE /* XYBlock4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYBlock4.h; sourceTree = "<group>"; };
+		D247AC0522C52B0C00C613BE /* XYBlock4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYBlock4.m; sourceTree = "<group>"; };
+		D247AC0722C5310F00C613BE /* XYBlock5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYBlock5.h; sourceTree = "<group>"; };
+		D247AC0822C5310F00C613BE /* XYBlock5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYBlock5.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +87,12 @@
 				D075D30D22C488DC009130F1 /* XYBlock1.m */,
 				D075D31122C4A947009130F1 /* XYBlock2.h */,
 				D075D31222C4A947009130F1 /* XYBlock2.m */,
+				D247AC0122C5239A00C613BE /* XYBlock3.h */,
+				D247AC0222C5239A00C613BE /* XYBlock3.m */,
+				D247AC0422C52B0C00C613BE /* XYBlock4.h */,
+				D247AC0522C52B0C00C613BE /* XYBlock4.m */,
+				D247AC0722C5310F00C613BE /* XYBlock5.h */,
+				D247AC0822C5310F00C613BE /* XYBlock5.m */,
 				D075D30A22C46127009130F1 /* XYBlock.cpp */,
 				D075D30F22C48C5F009130F1 /* XYBlock1.cpp */,
 				D075D31422C4AA21009130F1 /* XYBlock2.cpp */,
@@ -141,10 +156,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D247AC0322C5239A00C613BE /* XYBlock3.m in Sources */,
+				D247AC0622C52B0C00C613BE /* XYBlock4.m in Sources */,
 				D075D30922C45F6B009130F1 /* XYBlock.m in Sources */,
 				D075D30E22C488DC009130F1 /* XYBlock1.m in Sources */,
 				D075D2FA22C459B5009130F1 /* main.m in Sources */,
 				D075D31322C4A947009130F1 /* XYBlock2.m in Sources */,
+				D247AC0922C5310F00C613BE /* XYBlock5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
