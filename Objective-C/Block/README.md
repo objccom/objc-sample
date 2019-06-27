@@ -1,4 +1,6 @@
-Block是面试过程的考察重点，这章主要讲解Block的本质、截获变量的特性、`__block`修饰符、`block`的内存管理和循环引用问题。通过`clang`编译器深度剖析`block`底层实现。
+Block在开发中常用的，要想解决Block在开发中遇到的问题，我们需要了解Block的本质、截获变量的特性、`__block`修饰符、`block`的内存管理和循环引用问题。通过`clang`编译器深度剖析`block`底层实现。
+
+为了便于理解使用了较多白话，[查看demo](https://github.com/objccom/objc-sample/tree/master/Objective-C/Block)
 
 ### 通过`clang`编译器剖析`block`
 
